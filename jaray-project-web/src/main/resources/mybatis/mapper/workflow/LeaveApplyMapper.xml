@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vienna.jaray.mapper.leave.LeaveApplyMapper">
+
+    <resultMap id="CommonResultMap" type="leaveApply">
+        <id property="id" column="id"/>
+        <result property="processInstanceId" column="process_instance_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="leaveType" column="leave_type"/>
+        <result property="reason" column="reason"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="days" column="days"/>
+        <result property="userName" column="user_name"/>
+        <result property="processStatus" column="process_status"/>
+        <result property="submitTime" column="submit_time"/>
+        <result property="createTime" column="create_time"/>
+        <result property="delFlag" column="del_flag"/>
+    </resultMap>
+  
+    <sql id="Base_Column_List">
+        id, process_instance_id, user_id, leave_type, reason, start_time, end_time, days, user_name, process_status, submit_time,
+	    create_time, update_time
+    </sql>
+  
+    <insert id="add">
+        insert into leave_apply (id, process_instance_id, user_id, leave_type, reason, start_time, end_time, days, user_name,process_status, submit_time,
+            create_time, update_time)
+        values (LPAD(NEXTVAL('seq_leave'), 8, 0), #{leaveApply.processInstanceId}, #{leaveApply.userId}, #{leaveApply.userId},
+            #{leaveApply.reason}, #{leaveApply.startTime},#{leaveApply.endTime},#{leaveApply.days}, #{leaveApply.userName},
+            #{leaveApply.processStatus}, #{leaveApply.submitTime}, #{leaveApply.createTime}, #{leaveApply.updateTime})
+    </insert>
+  
+    <delete id="deleteByIds">
+        delete from leave_apply where id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+  
+    <update id="updateById">
+        update leave_apply
+        <trim prefix="set" suffixOverrides=",">
+            <if test="entity.id != null">`id` = #{entity.id},</if>
+            <if test="entity.processInstanceId != null">`process_instance_id` = #{entity.processInstanceId},</if>
+            <if test="entity.leaveType != null">`leave_type` = #{entity.leaveType},</if>
+            <if test="entity.reason != null">`reason` = #{entity.reason},</if>
+            <if test="entity.startTime != null">`start_time` = #{entity.startTime},</if>
+            <if test="entity.endTime != null">`start_time` = #{entity.endTime},</if>
+            <if test="entity.days != null">`days` = #{entity.days},</if>
+            <if test="entity.processStatus != null">`process_status` = #{entity.processStatus},</if>
+            <if test="entity.submitTime != null">`submit_time` = #{entity.submitTime},</if>
+            <if test="entity.createTime != null">`create_time` = #{entity.createTime},</if>
+            <if test="entity.updateTime != null">`update_time` = #{entity.updateTime},</if>
+        </trim>
+        where id = #{entity.id} and process_status in ('D', 'N')
+    </update>
+  
+    <select id="findAll" resultMap="CommonResultMap">
+        select
+            <include refid="Base_Column_List"></include>
+        from leave_apply la
+        <where>
+            <if test="common.search != null and common.search != ''"> la.user_name = #{common.search}</if>
+        </where>
+        order by la.id desc
+    </select>
+  
+    <select id="findById" resultMap="CommonResultMap">
+        select
+            <include refid="Base_Column_List"></include>
+        from leave_apply where id = #{id}
+    </select>
+
+    <select id="findByProcessInstanceIds" resultMap="CommonResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from leave_apply where process_instance_id in
+        <foreach item="processInstanceId" collection="processInstanceIdList" open="(" separator="," close=")">
+            #{processInstanceId}
+        </foreach>
+    </select>
+  
+</mapper>

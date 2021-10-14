@@ -1,0 +1,9 @@
+/.idea
+/jaray-project-common/.mvn
+/jaray-project-entity/.mvn
+/jaray-project-mapper/.mvn
+/jaray-project-service/.mvn
+/jaray-project-web/.mvn
+/we-chat-applet/.mvn
+/we-chat-applet
+/jaray-project-web/src/main/resources/dist
