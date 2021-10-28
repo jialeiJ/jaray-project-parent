@@ -22,13 +22,15 @@ public class KaptchaConfig {
         properties.setProperty("kaptcha.border", "yes");
         properties.setProperty("kaptcha.borded.color", "105,179,90");
         properties.setProperty("kaptcha.textproduced.font.color", "blue");
-        properties.setProperty("kaptcha.image.width", "165");
-        properties.setProperty("kaptcha.image.height", "48");
-        properties.setProperty("kaptcha.textproduced.font.size", "40");
-        properties.setProperty("kaptcha.session.key", "code");
+        // properties.setProperty("kaptcha.image.width", "165");
+        // properties.setProperty("kaptcha.image.height", "80");
+        properties.setProperty("kaptcha.textproduced.font.size", "24");
+        properties.setProperty("kaptcha.session.key", "kaptchaCode");
+        properties.setProperty("kaptcha.textproducer.char.space", "8");
         properties.setProperty("kaptcha.textproduced.chad.length", "5");
-        properties.setProperty("kaptcha.textproduced.font.names", "宋体,楷体,微软雅黑");
-        properties.setProperty("kaptcha.obscurificatod.impl","com.google.code.kaptcha.impl.WaterRipple");
+        properties.setProperty("kaptcha.textproduced.font.names", "Arial,Courier");
+        properties.setProperty("kaptcha.obscurificatod.impl","com.google.code.kaptcha.impl.FishEyeGimpy");
+        properties.setProperty("kaptcha.noise.impl","com.google.code.kaptcha.impl.DefaultNoise");
         Config config = new Config(properties);
         defaultKaptcha.setConfig(config);
 
