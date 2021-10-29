@@ -62,10 +62,7 @@ export default {
         { title: '方法', dataIndex: 'method', key: 'method' },
         { title: '参数', dataIndex: 'params', key: 'params' },
         { title: 'IP地址', dataIndex: 'ip', key: 'ip' },
-        { title: '创建人', dataIndex: 'createBy', key: 'createBy' },
         { title: '创建时间', dataIndex: 'createTime', key: 'createTime', formatter: this.dateTimeFormatter },
-        { title: '更新人', dataIndex: 'lastUpdateBy', key: 'lastUpdateBy' },
-        { title: '更新时间', dataIndex: 'lastUpdateTime', key: 'lastUpdateTime', formatter: this.dateTimeFormatter },
         // 此处为操作栏，不需要可以删除，clickFun绑定此操作按钮的事件
         { prop: 'operation', label: '操作', fixed: 'right', width: 143,
           operation: [

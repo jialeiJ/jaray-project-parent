@@ -9,6 +9,7 @@
         <result property="operation" column="operation"/>
         <result property="method" column="method"/>
         <result property="params" column="params"/>
+        <result property="returnResult" column="return_result"/>
         <result property="time" column="time"/>
         <result property="ip" column="ip"/>
         <result property="createBy" column="create_by"/>
@@ -17,7 +18,7 @@
         <result property="lastUpdateTime" column="last_update_time"/>
     </resultMap>
 
-    <sql id="Base_Column_List" >
+    <sql id="Base_Column_List">
 		l.id,l.user_name,l.operation,l.method,l.params,l.time,l.ip,
         l.create_by,l.create_time,l.last_update_by,l.last_update_time
     </sql>
@@ -38,9 +39,9 @@
 
     <!-- 添加字典 -->
     <insert id="add">
-    	insert into sys_log (`id`, `user_name`, `operation`, `method`, `params`, `time`, `ip`, `create_by`, `create_time`)
+    	insert into sys_log (`id`, `user_name`, `operation`, `method`, `params`, `return_result`, `time`, `ip`, `create_by`, `create_time`)
     	values (findNextFormatSeqVal('U','s_sys_log_id'), #{entity.userName}, #{entity.operation}, #{entity.method},
-    	 #{entity.params}, #{entity.time}, #{entity.ip}, #{entity.createBy}, #{entity.createTime})
+    	 #{entity.params}, #{entity.returnResult}, #{entity.time}, #{entity.ip}, #{entity.createBy}, #{entity.createTime})
     </insert>
 
     <!-- 查询字典 -->
@@ -74,6 +75,7 @@
             <if test="entity.operation != null">`operation` = #{entity.operation},</if>
             <if test="entity.method != null">`method` = #{entity.method},</if>
             <if test="entity.params != null">`params` = #{entity.params},</if>
+            <if test="entity.returnResult != null">`return_result` = #{entity.returnResult},</if>
             <if test="entity.time != null">`time` = #{entity.time},</if>
             <if test="entity.ip != null">`ip` = #{entity.ip},</if>
             <if test="entity.createBy != null">`create_by` = #{entity.createBy},</if>

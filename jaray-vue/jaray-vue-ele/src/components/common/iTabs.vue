@@ -27,7 +27,7 @@
         </el-tab-pane>
       </el-tabs>
       <div class="tags-close-box">
-        <el-dropdown @command="handleTags">
+        <el-dropdown size="medium" @command="handleTags">
           <el-button>
             标签选项
             <i class="el-icon-arrow-down el-icon--right"/>
@@ -374,14 +374,14 @@ body > .el-container {
     }
 }
 
-::v-deep .el-dropdown-menu__item {
-    list-style: none;
-    line-height: 24px;
-    padding: 0 16px;
-    margin: 0;
-    font-size: 12px;
-    color: #606266;
-    cursor: pointer;
-    outline: 0;
-}
+// ::v-deep .el-dropdown-menu__item {
+//     list-style: none;
+//     line-height: 24px;
+//     padding: 10px 16px;
+//     margin: 10px;
+//     font-size: 12px;
+//     color: #606266;
+//     cursor: pointer;
+//     outline: 0;
+// }
 </style>

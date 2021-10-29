@@ -4,6 +4,7 @@
     :page-size="pageSize"
     :page-size-options="['1', '5', '10', '20', '50', '100', '200', '300', '400']"
     :total="total"
+    :show-total="total => `共 ${total} 条`"
     size="small"
     show-size-changer
     show-quick-jumper

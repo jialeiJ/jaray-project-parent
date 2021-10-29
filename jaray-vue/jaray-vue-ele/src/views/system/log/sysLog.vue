@@ -60,18 +60,15 @@ export default {
       tableHeight: 'calc(95vh - 200px)',
       search: '',
       tableTitle: [
-        { prop: 'id', label: 'ID', fixed: true, sort: true },
+        { prop: 'id', label: 'ID', sort: true },
         { prop: 'userName', label: '用户姓名', sort: true, filters: [] },
         { prop: 'operation', label: '用户操作' },
         { prop: 'method', label: '方法' },
         { prop: 'params', label: '参数' },
         { prop: 'ip', label: 'IP地址' },
-        { prop: 'createBy', label: '创建人' },
         { prop: 'createTime', label: '创建时间', formatter: this.dateTimeFormatter },
-        { prop: 'lastUpdateBy', label: '更新人' },
-        { prop: 'lastUpdateTime', label: '更新时间', formatter: this.dateTimeFormatter },
         // 此处为操作栏，不需要可以删除，clickFun绑定此操作按钮的事件
-        { prop: 'operation', label: '操作', fixed: 'right', width: 143,
+        { prop: 'operation', label: '操作', width: 90,
           operation: [
             { name: '查看', style: 'primary', clickFun: this.viewSysLog, disabled: true },
             { name: '修改', style: 'primary', clickFun: this.editViewSysLog }

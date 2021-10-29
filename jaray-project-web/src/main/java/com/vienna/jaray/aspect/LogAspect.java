@@ -44,8 +44,8 @@ public class LogAspect {
 	 * 切面 配置通知
 	 * @param joinPoint 切点
 	 */
-    @AfterReturning("logPointCut()")
-	public void saveLog(JoinPoint joinPoint) {
+    @AfterReturning(returning = "returnResult", pointcut = "logPointCut()")
+	public void saveLog(JoinPoint joinPoint, Object returnResult) {
 		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 		HttpServletRequest request = attributes.getRequest();
 		String token = JwtTokenUtil.getToken(request);
@@ -78,6 +78,8 @@ public class LogAspect {
 		// 将参数所在的数组转成json
 		String params = new Gson().toJson(args);
 		sysLog.setParams(params);
+		String result = new Gson().toJson(returnResult);
+		sysLog.setReturnResult(result);
 		sysLog.setCreateTime(DateTimeUtil.getCurDateTime(DateTimeUtil.DATE_FORMAT_FULL));
 		// 获取用户名
 		sysLog.setUserName(userName);
