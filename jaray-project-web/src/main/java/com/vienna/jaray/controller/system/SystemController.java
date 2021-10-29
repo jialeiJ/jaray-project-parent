@@ -23,6 +23,13 @@ import javax.servlet.http.HttpSession;
 @RestController
 @RequestMapping("/system")
 public class SystemController {
+
+    @Autowired
+    HttpServletRequest request;
+    @Autowired
+    HttpServletResponse response;
+    @Autowired
+    HttpSession session;
     @Autowired
     private KaptchaService kaptchaService;
     @Autowired
@@ -31,12 +38,12 @@ public class SystemController {
     private SysMenuService sysMenuService;
 
     @GetMapping("/captcha.jpg")
-    public void kaptchaImage(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+    public void kaptchaImage() throws Exception {
         kaptchaService.kaptchaImage(request, response, session);
     }
 
     @PostMapping("/login")
-    public ResponseResult login(HttpServletRequest request, String username, String password, String captcha, HttpSession session) {
+    public ResponseResult login(String username, String password, String captcha) {
         return systemService.login(request, username, password, captcha, session);
     }
 

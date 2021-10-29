@@ -18,5 +18,5 @@ public interface KaptchaService {
      * @param session session 对象
      * @throws IOException IOException
      */
-    void kaptchaImage(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException;
+    void kaptchaImage(HttpServletRequest request, HttpServletResponse response, HttpSession session);
 }

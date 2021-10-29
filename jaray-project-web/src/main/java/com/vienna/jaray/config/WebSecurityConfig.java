@@ -49,6 +49,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/webjars/**").permitAll()
 			// SQL监控（druid）
             .antMatchers("/druid/**").permitAll()
+			// 验证码
+			.antMatchers("/system/captcha.jpg").permitAll()
 			// 登录页面
             .antMatchers("/").permitAll()
 			.antMatchers("/login").permitAll()
@@ -59,8 +61,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/system/login").permitAll()
 			// 刷新token
 			.antMatchers("/system/refreshToken").permitAll()
-			// 验证码
-			.antMatchers("/system/captcha.jpg**").permitAll()
 			// 流程图
 			.antMatchers("/flow/diagram").permitAll()
 			// excel导出
@@ -119,7 +119,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				"/",
 				"/dist/**",
 				"/main",
-				"/system/captcha.jpg**",
+				"/favicon.ico",
+				"/system/captcha.jpg",
 				"/flow/diagram",
 				"/system/login",
 				"/system/refreshToken",

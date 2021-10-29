@@ -29,6 +29,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
             .excludePathPatterns("/")
             .excludePathPatterns("/dist/**")
             .excludePathPatterns("/main")
+            .excludePathPatterns("/system/captcha.jpg")
             .excludePathPatterns("/system/login")
             .excludePathPatterns("/druid/**")
             .excludePathPatterns("/**/*.html")
