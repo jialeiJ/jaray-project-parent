@@ -53,8 +53,8 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-::v-deep .el-pagination{
+<style lang="scss" scoped>
+/deep/ .el-pagination{
     margin-top: 10px!important;
 }
 </style>

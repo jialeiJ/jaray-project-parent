@@ -189,7 +189,6 @@ export default {
             }
           })
         } else {
-          console.log('error submit!!')
           return false
         }
       })
@@ -200,13 +199,12 @@ export default {
       that.$router.push({ path: '/' })
       that.$store.dispatch('modifyLeftMenus', [])
       console.log(that.$store.getters.leftMenus)
-      // window.location.reload()
     },
     handleOpen: function(key, keyPath) {
-      // console.log(key, keyPath);
+      console.log(key, keyPath)
     },
     handleClose: function(key, keyPath) {
-      // console.log(key, keyPath);
+      console.log(key, keyPath)
     },
     addTab: function(key, keyPath) {
       const that = this

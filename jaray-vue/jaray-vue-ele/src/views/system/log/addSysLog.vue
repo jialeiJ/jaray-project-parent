@@ -137,7 +137,7 @@ a {
   color: #42b983;
 }
 
-::v-deep .el-dialog .el-dialog__body {
+/deep/ .el-dialog .el-dialog__body {
   border-top: 1px solid #dcdfe6;
   border-bottom: 1px solid #dcdfe6;
   max-height: calc(85vh - 260px);

@@ -349,13 +349,13 @@ export default {
           result: '123456'
         },
         prepareCallback: function(url) {
-          // console.log('下载中...');
+          console.log('下载中...')
         },
         successCallback: function(url) {
-          // console.log('下载成功！！');
+          console.log('下载成功！！')
         },
         failCallback: function(html, url) {
-          // console.log('下载失败！！');
+          console.log('下载失败！！')
         }
       })
     },
@@ -387,12 +387,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-::v-deep .el-select,.el-cascader {
+/deep/ .el-select,.el-cascader {
     display: block;
     position: relative;
 }
 
-::v-deep .el-dialog .el-dialog__body {
+/deep/ .el-dialog .el-dialog__body {
   border-top: 1px solid #dcdfe6;
   border-bottom: 1px solid #dcdfe6;
   max-height: calc(85vh - 260px);

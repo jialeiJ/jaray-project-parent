@@ -78,10 +78,10 @@ export default {
       })
     },
     handleOpen: function(key, keyPath) {
-      // console.log(key, keyPath);
+      console.log(key, keyPath)
     },
     handleClose: function(key, keyPath) {
-      // console.log(key, keyPath);
+      console.log(key, keyPath)
     },
     addTab: function(key, keyPath) {
       const that = this

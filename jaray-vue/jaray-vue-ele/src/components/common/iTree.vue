@@ -91,7 +91,6 @@ export default {
     allChecked() {
       const that = this
       const keys = []
-      console.log(that.tileTreeData)
       that.tileTreeData.forEach(function(item, index) {
         const i = keys.indexOf(item.parent_id)
         if (i === -1) {

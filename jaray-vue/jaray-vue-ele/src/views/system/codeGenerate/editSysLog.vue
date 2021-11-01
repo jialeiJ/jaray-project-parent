@@ -102,7 +102,6 @@ export default {
       // 调用接口
       LOG_API.viewSysLog(params).then(function(result) {
         if (result.code === 200) {
-          console.log()
           that.editForm = result.map.sysLog
           that.editDialogFormVisible = true
         }

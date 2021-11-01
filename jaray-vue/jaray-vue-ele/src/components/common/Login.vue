@@ -109,7 +109,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-::v-deep .el-form-item__content{
+/deep/ .el-form-item__content{
     margin-left:0!important;
 }
 

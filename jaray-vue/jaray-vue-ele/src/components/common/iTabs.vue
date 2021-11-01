@@ -6,6 +6,7 @@
         v-model="tabsValue"
         type="border-card"
         style="height: 100%;"
+        @tab-click="handleClick"
         @tab-remove="removeTab">
         <el-tab-pane
           v-for="(item, index) in tabs"
@@ -71,6 +72,7 @@ export default {
   },
   created: function() {
     const tempRoutes = this.$router.options.routes
+    const isRefresh = false
     for (let i = 0; i < tempRoutes.length; i++) {
       const temp = tempRoutes[i]
       if (temp.path === '/introduction') {
@@ -78,15 +80,33 @@ export default {
         menu.name = temp.title
         menu.component = temp.component
         menu.path = temp.path
-        this.addOneTab(menu)
+        this.addOneTab(menu, isRefresh)
       }
     }
   },
   mounted: function() {
+    const that = this
+    const isRefresh = true
+    const tabs = JSON.parse(sessionStorage.getItem('tabs'))
+    var tabsPromise = new Promise(function(resolve, reject) {
+      tabs.forEach(tab => {
+        const params = {
+          path: tab.path
+        }
+        that.addTab(params, isRefresh)
+      })
+      resolve()
+    })
 
+    tabsPromise.then(function() {
+      that.tabsValue = sessionStorage.getItem('tabsValue')
+    })
   },
   methods: {
-    addOneTab(menu) {
+    handleClick(tab, event) {
+      sessionStorage.setItem('tabsValue', tab.name)
+    },
+    addOneTab(menu, isRefresh) {
       const that = this
       var exist = false
       for (var i = 0; i < that.tabs.length; i++) {
@@ -97,7 +117,9 @@ export default {
         }
       }
       if (exist === true) {
-        that.tabsValue = menu.name
+        if (!isRefresh) {
+          that.tabsValue = menu.name
+        }
         return
       } else {
         that.index = that.tabs.length
@@ -108,21 +130,26 @@ export default {
         content: menu.component,
         path: menu.path
       })
-      that.tabsValue = menu.name
+      if (!isRefresh) {
+        that.tabsValue = menu.name
+      }
+
+      if (menu.path !== '/introduction') {
+        sessionStorage.setItem('tabs', JSON.stringify(that.tabs))
+      }
 
       that.render()
     },
-    addTab(params) {
+    addTab(params, isRefresh) {
       const that = this
       const tempRoutes = that.$router.options.routes
+      const menu = {}
       for (let i = 0; i < tempRoutes.length; i++) {
         const temp = tempRoutes[i]
         if (temp.path === params.path) {
-          const menu = {}
           menu.name = temp.title
           menu.component = temp.component
           menu.path = params.path
-          that.addOneTab(menu)
         }
       }
 
@@ -131,12 +158,14 @@ export default {
         that.iframeComponent = Vue.component('iframe-component', {
           template: '<iframe id="' + uid + '" name="' + uid + '" src="' + params.path + '" scrolling="yes" width="100%" height="100%" frameborder="0" style="height: calc(95vh - 100px);overflow: auto;"></iframe>'
         })
-        const menu = {}
         menu.name = params.title
         menu.component = that.iframeComponent.options
         menu.path = params.path
         that.index++
-        that.addOneTab(menu)
+      }
+      that.addOneTab(menu, isRefresh)
+      if (!isRefresh) {
+        sessionStorage.setItem('tabsValue', menu.name)
       }
     },
     removeTab(targetName) {
@@ -159,8 +188,20 @@ export default {
       that.index--
       that.tabsValue = activeName
       that.tabs = tabs.filter(tab => tab.name !== targetName)
+
+      const isRefresh = false
+      that.tabs.forEach(tab => {
+        const params = {
+          path: tab.path
+        }
+        that.addTab(params, isRefresh)
+      })
+
+      sessionStorage.setItem('tabs', JSON.stringify(that.tabs))
+      sessionStorage.setItem('tabsValue', that.tabsValue)
     },
     handleTags(command) {
+      const that = this
       switch (command) {
         case 'other':
           this.closeOther()
@@ -178,6 +219,7 @@ export default {
           // 这里是没有找到对应的值处理
           break
       }
+      sessionStorage.setItem('tabsValue', that.tabsValue)
     },
     closeOther() {
       const that = this
@@ -325,7 +367,7 @@ body > .el-container {
     }
 }
 
-::v-deep .el-tabs--border-card>.el-tabs__header {
+/deep/ .el-tabs--border-card>.el-tabs__header {
     background-color: #F5F7FA;
     border-bottom: 1px solid #E4E7ED;
     margin: 0;
@@ -373,15 +415,4 @@ body > .el-container {
         }
     }
 }
-
-// ::v-deep .el-dropdown-menu__item {
-//     list-style: none;
-//     line-height: 24px;
-//     padding: 10px 16px;
-//     margin: 10px;
-//     font-size: 12px;
-//     color: #606266;
-//     cursor: pointer;
-//     outline: 0;
-// }
 </style>

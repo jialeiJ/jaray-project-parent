@@ -196,7 +196,6 @@ export const viewImage = (url, params) => {
   let urlParams = '&'
   for (var item in params) {
     urlParams = urlParams + item + '=' + params[item] + '&'
-    console.log(item, params[item])
   }
   urlParams = urlParams.substring(0, urlParams.lastIndexOf('&'))
   return `${base}${url}?timer=${getTimestamp}` + urlParams

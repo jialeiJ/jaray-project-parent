@@ -229,7 +229,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-::v-deep .el-cascader {
+/deep/ .el-cascader {
     display: block;
     position: relative;
 }

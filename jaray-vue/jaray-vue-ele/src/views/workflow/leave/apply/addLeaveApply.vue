@@ -136,8 +136,6 @@ export default {
     'addForm.startAndEndDate': function(nval, oval) {
       const that = this
       if (nval) {
-        console.log(that.addForm.startAndEndDate[0])
-        console.log(nval[1])
         var sDate = new Date(that.addForm.startAndEndDate[0])
         var eDate = new Date(that.addForm.startAndEndDate[1])
         var times = eDate.getTime() - sDate.getTime()
@@ -201,12 +199,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-::v-deep .el-select,.el-cascader {
+/deep/ .el-select,.el-cascader {
     display: block;
     position: relative;
 }
 
-::v-deep .el-dialog .el-dialog__body {
+/deep/ .el-dialog .el-dialog__body {
   border-top: 1px solid #dcdfe6;
   border-bottom: 1px solid #dcdfe6;
   max-height: calc(85vh - 260px);
