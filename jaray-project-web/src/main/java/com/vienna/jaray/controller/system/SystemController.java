@@ -6,12 +6,15 @@ import com.vienna.jaray.service.system.KaptchaService;
 import com.vienna.jaray.service.system.SystemService;
 import com.vienna.jaray.service.system.SysMenuService;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.NotEmpty;
 
 /**
  * @author Jaray
@@ -20,6 +23,7 @@ import javax.servlet.http.HttpSession;
  */
 @Slf4j
 @CrossOrigin
+@Validated
 @RestController
 @RequestMapping("/system")
 public class SystemController {
@@ -43,7 +47,7 @@ public class SystemController {
     }
 
     @PostMapping("/login")
-    public ResponseResult login(String username, String password, String captcha) {
+    public ResponseResult login(@NotEmpty @Length(min = 2, message = "用户名至少2位") String username, String password, String captcha) {
         return systemService.login(request, username, password, captcha, session);
     }
 

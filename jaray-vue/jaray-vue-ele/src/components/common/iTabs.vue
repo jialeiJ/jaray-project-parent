@@ -88,19 +88,21 @@ export default {
     const that = this
     const isRefresh = true
     const tabs = JSON.parse(sessionStorage.getItem('tabs'))
-    var tabsPromise = new Promise(function(resolve, reject) {
-      tabs.forEach(tab => {
-        const params = {
-          path: tab.path
-        }
-        that.addTab(params, isRefresh)
+    if (tabs) {
+      var tabsPromise = new Promise(function(resolve, reject) {
+        tabs.forEach(tab => {
+          const params = {
+            path: tab.path
+          }
+          that.addTab(params, isRefresh)
+        })
+        resolve()
       })
-      resolve()
-    })
 
-    tabsPromise.then(function() {
-      that.tabsValue = sessionStorage.getItem('tabsValue')
-    })
+      tabsPromise.then(function() {
+        that.tabsValue = sessionStorage.getItem('tabsValue')
+      })
+    }
   },
   methods: {
     handleClick(tab, event) {
@@ -185,16 +187,12 @@ export default {
           }
         })
       }
-      that.index--
       that.tabsValue = activeName
       that.tabs = tabs.filter(tab => tab.name !== targetName)
-
-      const isRefresh = false
-      that.tabs.forEach(tab => {
-        const params = {
-          path: tab.path
+      that.tabs.forEach((tab, index) => {
+        if (tab.name === activeName) {
+          that.index = index
         }
-        that.addTab(params, isRefresh)
       })
 
       sessionStorage.setItem('tabs', JSON.stringify(that.tabs))
