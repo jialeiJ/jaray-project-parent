@@ -91,16 +91,14 @@ export default {
     if (tabs) {
       var tabsPromise = new Promise(function(resolve, reject) {
         tabs.forEach(tab => {
-          const params = {
-            path: tab.path
-          }
-          that.addTab(params, isRefresh)
+          that.addTab(tab, isRefresh)
         })
         resolve()
       })
 
       tabsPromise.then(function() {
         that.tabsValue = sessionStorage.getItem('tabsValue')
+        console.log(that.tabsValue)
       })
     }
   },
