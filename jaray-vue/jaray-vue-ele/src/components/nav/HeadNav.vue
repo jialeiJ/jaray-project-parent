@@ -1,34 +1,35 @@
 <template>
-  <div>
+  <div style="height: 100%;">
     <el-menu
       :default-active="$route.path"
+      :mode="navMode"
+      :class="isLeftNav? 'el-menu-vertical-demo' : 'el-menu-demo'"
+      :collapse="collapsed && isLeftNav"
       unique-opened
-      class="el-menu-demo"
       background-color="#545c64"
       text-color="#fff"
       active-text-color="#ffd04b"
-      mode="horizontal"
       @select="addTab"
       @open="handleOpen"
       @close="handleClose">
-      <el-menu-item index="title">
+      <el-menu-item v-if="!isLeftNav" index="title">
         <a style="text-decoration:none;color:white;font-size:20px;">
           后台管理系统
         </a>
       </el-menu-item>
-      <el-menu-item index="collapsed">
+      <el-menu-item v-if="!isLeftNav" index="collapsed">
         <i :class="[collapsed?'iconfont icon-collapse-white go':'iconfont icon-collapse-white to']" style="display : block;"/>
       </el-menu-item>
-      <left-nav v-if="isShow" id="leftNav" :left-menus="leftMenus" :icon="false" @addTab="addTab"/>
+      <left-nav v-if="isShow" id="leftNav" :icon="navIcon" :left-menus="leftMenus" @addTab="addTab"/>
 
-      <el-submenu index="user" style="float: right;">
+      <el-submenu v-if="!isLeftNav" index="user" style="float: right;">
         <template slot="title">用户：{{ userInfo.name }}</template>
         <el-menu-item index="user-1">选项1</el-menu-item>
         <el-menu-item index="user-2" @click="editDialogFormVisible = true">修改密码</el-menu-item>
         <el-menu-item index="user-3" @click="signOut">退出系统</el-menu-item>
       </el-submenu>
     </el-menu>
-    <div id="edit">
+    <div v-if="!isLeftNav" id="edit">
       <el-dialog :visible.sync="editDialogFormVisible" title="修改密码">
         <el-form ref="editForm" :model="editForm" :rules="rules">
           <el-form-item :label-width="formLabelWidth" label="原始密码" prop="srcPassword">
@@ -58,6 +59,26 @@ import LeftNav from '@/components/nav/LeftNav'
 export default {
   name: 'HeadNav',
   components: { LeftNav },
+  props: {
+    isLeftNav: {
+      type: Boolean,
+      default: function() {
+        return false
+      }
+    },
+    navMode: {
+      type: String,
+      default: function() {
+        return 'horizontal'
+      }
+    },
+    navIcon: {
+      type: Boolean,
+      default: function() {
+        return true
+      }
+    }
+  },
   data() {
     var validatePass = (rule, value, callback) => {
       if (value === '') {
@@ -127,6 +148,7 @@ export default {
     leftMenus: {
       handler(newVal, oldVal) {
         if (newVal) {
+          this.tileLeftNavData = []
           this.tileLeftNav(newVal)
         }
       },
@@ -139,6 +161,7 @@ export default {
   mounted: function() {
     const that = this
     that.setUserInfo()
+    that.findLeftNav()
 
     window.onresize = () => {
       return (() => {
@@ -155,6 +178,17 @@ export default {
     }
   },
   methods: {
+    findLeftNav: function() {
+      const that = this
+      // 定义请求参数
+      const params = {}
+      // 调用接口
+      API.findLeftNav(params).then(function(result) {
+        if (result.code === 200) {
+          that.leftMenus = result.map.leftMenu
+        }
+      })
+    },
     // 折叠导航栏
     changeCollapse: function() {
       this.collapsed = !this.collapsed
@@ -197,7 +231,7 @@ export default {
       const that = this
       sessionStorage.clear()
       that.$router.push({ path: '/' })
-      that.$store.dispatch('modifyLeftMenus', [])
+      // that.$store.dispatch('modifyLeftMenus', [])
       console.log(that.$store.getters.leftMenus)
     },
     handleOpen: function(key, keyPath) {
@@ -280,5 +314,15 @@ export default {
     transition: all 0.5s;
     // 解决内联元素使用transform的rotate属性不起作用
     display: inline-block;
+}
+
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+    width: 200px;
+    min-height: 100%;
+}
+
+.el-menu--collapse {
+    width: 64px;
+    min-height: 100%;
 }
 </style>

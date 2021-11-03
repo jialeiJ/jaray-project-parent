@@ -10,16 +10,18 @@
             style="width: 200px"/>
           <el-button type="success" plain @click="initTable">查询</el-button>
           <el-button v-if="hasPermission('sys:menu:add')" type="success" plain @click="addSysMenu">增加</el-button>
-          <el-button v-if="hasPermission('sys:menu:delete')" type="danger" plain @click="deleteSysMenu">删除</el-button>
+          <el-button v-if="hasPermission('sys:menu:delete')" type="danger" plain @click="batchDeleteSysMenu">删除</el-button>
         </div>
         <i-tree-table
           ref="iTable"
+          :have-checkbox="true"
           :table-title="tableTitle"
           :table-data="tableData"
           :table-height="tableHeight"
           @transmitParent="receiveChild"
           @handleView="viewSysMenu"
-          @handleEdit="editViewSysMenu"/>
+          @handleEdit="editViewSysMenu"
+          @handleDelete="deleteSysMenu"/>
         <i-pagination
           ref="iPagination"
           :total="total"
@@ -42,6 +44,8 @@
 </template>
 
 <script>
+import store from '@/store'
+import API from '@api/api_system'
 import MENU_API from '@api/api_sys_menu'
 import DICT_API from '@api/api_sys_dict'
 import iTreeTable from '@components/common/iTreeTable'
@@ -75,10 +79,11 @@ export default {
         { prop: 'lastUpdateBy', label: '更新人' },
         { prop: 'lastUpdateTime', label: '更新时间', formatter: this.dateTimeFormatter },
         // 此处为操作栏，不需要可以删除，clickFun绑定此操作按钮的事件
-        { prop: 'operation', label: '操作', fixed: 'right', width: 143,
+        { prop: 'operation', label: '操作', fixed: 'right', width: 240,
           operation: [
             { name: '查看', style: 'primary', clickFun: this.viewSysMenu, disabled: this.hasPermission('sys:menu:view') },
-            { name: '修改', style: 'primary', clickFun: this.editViewSysMenu, disabled: this.hasPermission('sys:menu:edit') }
+            { name: '修改', style: 'primary', clickFun: this.editViewSysMenu, disabled: this.hasPermission('sys:menu:edit') },
+            { name: '删除', style: 'danger', clickFun: this.deleteSysMenu, disabled: this.hasPermission('sys:menu:delete') }
           ]
         }
       ],
@@ -157,7 +162,6 @@ export default {
           })
           that.dirTreeData = data
           that.getDirTreeData(that.dirTreeData)
-          console.log(that.dirTreeData)
 
           that.filtersHandler(that.tableData)
         }
@@ -187,7 +191,25 @@ export default {
       const that = this
       that.$refs['editSysMenu'].openDialog(row)
     },
-    deleteSysMenu: function() {
+    deleteSysMenu: function(row) {
+      const that = this
+      // 定义请求参数
+      const params = {
+        ids: row.id
+      }
+      // 调用接口
+      MENU_API.deleteSysMenu(params).then(function(result) {
+        if (result.code === 200) {
+          that.$message({
+            message: '恭喜你，删除成功',
+            type: 'success'
+          })
+          that.initTable()
+          that.updateLeftNav()
+        }
+      })
+    },
+    batchDeleteSysMenu: function() {
       const that = this
       const ids = []
       for (var i = 0; i < that.multipleSelection.length; i++) {
@@ -200,11 +222,23 @@ export default {
       // 调用接口
       MENU_API.deleteSysMenu(params).then(function(result) {
         if (result.code === 200) {
-          that.initTable()
           that.$message({
             message: '恭喜你，删除成功',
             type: 'success'
           })
+          that.initTable()
+          that.updateLeftNav()
+        }
+      })
+    },
+    updateLeftNav: function() {
+      // 定义请求参数
+      const params = {}
+      // 调用接口
+      API.findLeftNav(params).then(function(result) {
+        if (result.code === 200) {
+          store.state.leftMenus = result.map.leftMenu
+          // location.reload()
         }
       })
     },

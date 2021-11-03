@@ -14,6 +14,7 @@
       @filter-change="handlerFilterChange"
       @row-click="rowClick">
       <el-table-column
+        v-if="haveCheckbox"
         type="selection"
         width="40"/>
       <template v-for="(item, key) in tableTitle" >
@@ -84,6 +85,12 @@ export default {
       default: function() {
         return 0
       }
+    },
+    haveCheckbox: {
+      type: Boolean,
+      default: function() {
+        return true
+      }
     }
   },
   data() {
@@ -115,6 +122,11 @@ export default {
       console.log(index, row)
       const that = this
       that.$emit('handleEdit', row)
+    },
+    handleDelete: function(index, row) {
+      console.log(index, row)
+      const that = this
+      that.$emit('handleDelete', row)
     },
     handleSelectionChange: function(val) {
       const that = this

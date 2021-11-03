@@ -3,29 +3,30 @@
     <el-dialog :visible.sync="viewFlowDiagramDialogFormVisible" title="流程图">
       <el-image :src="url"/>
       <div class="text item">
-        {{ '原因 ' + flowDetail.reason + '请假天数' + flowDetail.days + '请假开始时间' + flowDetail.startTime + '请假结束时间' + flowDetail.endTime }}
-      </div>
-
-      <el-timeline>
-        <el-timeline-item
-          v-for="(item, index) in taskList"
-          :key="index"
-          :icon="item.icon"
-          :type="item.type"
-          :color="item.color"
-          :size="item.size"
-          :timestamp="item.timestamp">
-          {{ item.name }}
-          <el-card>
-            <p>办理人 {{ item.assignee }}</p>
-            <p>开始时间 {{ item.startTime }} 结束时间 {{ item.endTime }}</p>
-          </el-card>
-        </el-timeline-item>
-      </el-timeline>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="viewFlowDiagramDialogFormVisible = false">取 消</el-button>
-      </div>
-    </el-dialog>
+        <strong>请假原因：</strong> {{ flowDetail.reason }}
+        <strong>请假天数：</strong> {{ flowDetail.days }}
+        <strong>请假开始时间：</strong> {{ $moment(flowDetail.startTime).format('YYYY-MM-DD HH:mm:ss') }}
+        <strong>请假结束时间：</strong> {{ $moment(flowDetail.endTime).format('YYYY-MM-DD HH:mm:ss') }}
+        <el-timeline>
+          <el-timeline-item
+            v-for="(item, index) in taskList"
+            :key="index"
+            :icon="item.icon"
+            :type="item.type"
+            :color="item.color"
+            :size="item.size"
+            :timestamp="item.timestamp">
+            {{ item.name }}
+            <el-card>
+              <p>办理人 {{ item.assignee }}</p>
+              <p>开始时间 {{ $moment(item.startTime).format('YYYY-MM-DD HH:mm:ss') }} 结束时间 {{ $moment(item.endTime).format('YYYY-MM-DD HH:mm:ss') }}</p>
+            </el-card>
+          </el-timeline-item>
+        </el-timeline>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="viewFlowDiagramDialogFormVisible = false">取 消</el-button>
+        </div>
+    </div></el-dialog>
   </div>
 </template>
 
@@ -53,7 +54,7 @@ export default {
       // label宽度
       formLabelWidth: 'calc(14vh - 0px)',
       viewFlowDiagramDialogFormVisible: false,
-      flowDetail: null,
+      flowDetail: {},
       active: 0
     }
   },
@@ -102,5 +103,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-
+/deep/ .el-card__body {
+    padding: 0px 20px 0px 20px;
+}
+/deep/ .el-timeline-item {
+    position: relative;
+    padding-bottom: 0px;
+}
 </style>

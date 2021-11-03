@@ -150,6 +150,7 @@ export default {
           menu.name = temp.title
           menu.component = temp.component
           menu.path = params.path
+          that.addOneTab(menu, isRefresh)
         }
       }
 
@@ -162,8 +163,9 @@ export default {
         menu.component = that.iframeComponent.options
         menu.path = params.path
         that.index++
+        that.addOneTab(menu, isRefresh)
       }
-      that.addOneTab(menu, isRefresh)
+
       if (!isRefresh) {
         sessionStorage.setItem('tabsValue', menu.name)
       }

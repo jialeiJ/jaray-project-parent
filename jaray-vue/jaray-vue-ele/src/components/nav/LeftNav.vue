@@ -1,6 +1,6 @@
 <template>
   <fragment>
-    <fragment v-for="(navMenu, index) in leftMenus" :key="index">
+    <template v-for="(navMenu, index) in leftMenus">
       <el-submenu
         v-if="navMenu.type == 0 && navMenu.children && navMenu.children.length >= 1"
         :key="index"
@@ -22,7 +22,7 @@
         <i :class="navMenu.icon"/>
         <span slot="title">{{ navMenu.name }}</span>
       </el-menu-item>
-    </fragment>
+    </template>
   </fragment>
 </template>
 

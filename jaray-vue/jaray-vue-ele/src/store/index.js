@@ -16,7 +16,7 @@ function initState() {
   }
 }
 // 首先声明一个需要全局维护的状态state，比如这里举例的collapsed
-const state = initState()
+const state = sessionStorage.getItem('state') ? JSON.parse(sessionStorage.getItem('state')) : initState()
 
 // 注册上面引入的各大模块
 const store = new Vuex.Store({

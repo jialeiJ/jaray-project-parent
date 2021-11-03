@@ -4,8 +4,7 @@ export function modifyCollapsed({ commit }, collapsed) {
   return commit('modifyCollapsed', collapsed)
 }
 
-// commit 提交；collapsed即为点击后传递过来的参数，此时是true or false
+// commit 提交；leftMenus即为点击后传递过来的参数，此时是true or false
 export function modifyLeftMenus({ commit }, leftMenus) {
   return commit('modifyLeftMenus', leftMenus)
 }
-

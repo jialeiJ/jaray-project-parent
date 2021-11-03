@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import store from '@/store'
 
 export default {
   name: 'App',
@@ -38,6 +39,10 @@ export default {
     // window.onbeforeunload = function(){
     //     beginTime = new Date().getTime()
     // };
+    // 监听刷新事件
+    window.addEventListener('unload', function() {
+      sessionStorage.setItem('state', JSON.stringify(store.state))
+    })
   }
 }
 </script>

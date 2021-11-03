@@ -1,11 +1,11 @@
 <template>
   <el-container>
     <el-header>
-      <head-nav @addTab="addTab"/>
+      <head-nav :nav-icon="false" @addTab="addTab"/>
     </el-header>
     <el-container>
       <el-aside :width="asideWidth" style="width:auto;">
-        <menu-tree @addTab="addTab"/>
+        <head-nav :is-left-nav="true" :nav-mode="'vertical'" @addTab="addTab"/>
       </el-aside>
       <el-main>
         <i-tabs ref="iTabs"/>
@@ -16,13 +16,13 @@
 </template>
 
 <script>
-import MenuTree from '@/components/nav/MenuTree'
+import LeftNav from '@/components/nav/LeftNav'
 import HeadNav from '@/components/nav/HeadNav'
 import iTabs from '@/components/common/iTabs'
 
 export default {
   name: 'MainPage',
-  components: { MenuTree, HeadNav, iTabs },
+  components: { LeftNav, HeadNav, iTabs },
   data() {
     return {
       // 左边菜单默认宽度
