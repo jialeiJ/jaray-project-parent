@@ -4,7 +4,6 @@
     :data-source="tableData"
     :row-key="(row,index)=> row.id?row.id:index"
     :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
-    :fixed="true"
     :custom-row="onClickRow"
     :scroll="{ x: 1500, y: 'calc(95vh - 300px)' }"
     bordered
@@ -13,10 +12,9 @@
     style="margin-bottom: 12px">
     <template v-for="(item, itemIndex) in tableTitle">
       <a-table-column
-        v-if="!item.operation"
         :key="item.key"
         :title="item.title"
-        :sorter="item.sorter"
+        :sorter="item.sort"
         :filters="item.filters"
         :data-index="item.dataIndex"
         :fixed="item.fixed"
@@ -42,6 +40,12 @@
               </a-popover>
             </template>
           </template>
+          <template v-else-if="item.operation">
+            <template v-for="(it, index) in item.operation">
+              <a :key="itemIndex+index" @click.stop="it.clickFun(record)">{{ it.name }}</a>
+              <a-divider v-if="index !== (item.operation.length-1)" :key="index" type="vertical" />
+            </template>
+          </template>
           <template v-else>
             <a-popover :title="item.title">
               <template slot="content">
@@ -51,21 +55,6 @@
                 {{ record[item.key] }}
               </template>
             </a-popover>
-          </template>
-        </template>
-      </a-table-column>
-      <a-table-column
-        v-if="item.operation"
-        :key="item.key"
-        :title="item.title"
-        :data-index="item.dataIndex"
-        :fixed="item.fixed"
-        :width="item.width"
-        :ellipsis="true">
-        <template slot-scope="text, record">
-          <template v-for="(it, index) in item.operation">
-            <a :key="index" @click.stop="it.clickFun(record)">{{ it.name }}</a>
-            <a-divider v-if="index !== (item.operation.length-1)" :key="index" type="vertical" />
           </template>
         </template>
       </a-table-column>
@@ -141,7 +130,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-::v-deep .ant-table-fixed-left table, .ant-table-fixed-right table{
+/deep/ .ant-table-fixed-left table, .ant-table-fixed-right table{
     width: min-content;
 }
 </style>

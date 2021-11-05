@@ -1,22 +1,26 @@
 <template>
   <div id="edit">
-    <el-dialog :visible.sync="editDialogFormVisible" title="编辑">
-      <el-form :model="form">
-        <el-form-item :label-width="formLabelWidth" label="标题">
-          <el-input v-model="form.title"/>
-        </el-form-item>
-        <el-form-item :label-width="formLabelWidth" label="描述">
-          <el-input v-model="form.desc"/>
-        </el-form-item>
-        <el-form-item :label-width="formLabelWidth" label="描述">
-          <el-input v-model="form.desc" type="textarea" readonly="readonly"/>
-        </el-form-item>
-      </el-form>
+    <a-modal
+      :visible.sync="editDialogFormVisible"
+      title="编辑"
+      @ok="handleOk"
+      @cancel="handleCancel">
+      <a-form :model="form">
+        <a-form-item :label-width="formLabelWidth" label="标题">
+          <a-input v-model="form.title"/>
+        </a-form-item>
+        <a-form-item :label-width="formLabelWidth" label="描述">
+          <a-input v-model="form.desc"/>
+        </a-form-item>
+        <a-form-item :label-width="formLabelWidth" label="描述">
+          <a-input v-model="form.desc" type="textarea" read-only/>
+        </a-form-item>
+      </a-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="editDialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="editComplaint">确 定</el-button>
+        <a-button @click="editDialogFormVisible = false">取 消</a-button>
+        <a-button type="primary" @click="editComplaint">确 定</a-button>
       </div>
-    </el-dialog>
+    </a-modal>
   </div>
 </template>
 
@@ -119,6 +123,14 @@ export default {
         }
       }
       return filters
+    },
+    handleOk(e) {
+      const that = this
+      that.editDialogFormVisible = false
+    },
+    handleCancel(e) {
+      const that = this
+      that.editDialogFormVisible = false
     }
   }
 }

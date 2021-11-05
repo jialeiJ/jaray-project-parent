@@ -248,7 +248,7 @@ export default {
       return result
     },
     roleFormatter: function(row, column, cellValue, index) {
-      if (cellValue === undefined) {
+      if (cellValue === undefined || cellValue === null) {
         return ''
       }
       let result = ''

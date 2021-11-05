@@ -1,25 +1,29 @@
 <template>
   <div id="add">
-    <el-dialog :visible.sync="addDialogFormVisible" title="新增">
-      <el-form :model="form">
-        <el-form-item :label-width="formLabelWidth" label="标题">
-          <el-input v-model="form.title" autocomplete="off"/>
-        </el-form-item>
-        <el-form-item :label-width="formLabelWidth" label="描述">
-          <el-input v-model="form.desc" autocomplete="off"/>
-        </el-form-item>
-        <el-form-item :label-width="formLabelWidth" label="活动区域">
-          <el-select v-model="form.region" placeholder="请选择活动区域">
-            <el-option label="区域一" value="shanghai"/>
-            <el-option label="区域二" value="beijing"/>
-          </el-select>
-        </el-form-item>
-      </el-form>
+    <a-modal
+      :visible.sync="addDialogFormVisible"
+      title="新增"
+      @ok="handleOk"
+      @cancel="handleCancel">
+      <a-form :model="form">
+        <a-form-item :label-width="formLabelWidth" label="标题">
+          <a-input v-model="form.title" autocomplete="off"/>
+        </a-form-item>
+        <a-form-item :label-width="formLabelWidth" label="描述">
+          <a-input v-model="form.desc" autocomplete="off"/>
+        </a-form-item>
+        <a-form-item :label-width="formLabelWidth" label="活动区域">
+          <a-select v-model="form.region" placeholder="请选择活动区域">
+            <a-option label="区域一" value="shanghai"/>
+            <a-option label="区域二" value="beijing"/>
+          </a-select>
+        </a-form-item>
+      </a-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="addDialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addComplaint">确 定</el-button>
+        <a-button @click="addDialogFormVisible = false">取 消</a-button>
+        <a-button type="primary" @click="addComplaint">确 定</a-button>
       </div>
-    </el-dialog>
+    </a-modal>
   </div>
 </template>
 
@@ -62,6 +66,14 @@ export default {
           that.addDialogFormVisible = false
         }
       })
+    },
+    handleOk(e) {
+      const that = this
+      that.addDialogFormVisible = false
+    },
+    handleCancel(e) {
+      const that = this
+      that.addDialogFormVisible = false
     }
   }
 }

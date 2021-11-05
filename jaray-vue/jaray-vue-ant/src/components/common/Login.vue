@@ -115,7 +115,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-::v-deep .ant-form-item__content{
+/deep/ .ant-form-item__content{
     margin-left:0!important;
 }
 

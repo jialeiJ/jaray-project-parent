@@ -5,7 +5,7 @@ const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
 var webpack = require('webpack')
 
-function resolve (dir) {
+function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 
@@ -28,16 +28,16 @@ module.exports = {
       '@': resolve('src'),
       '@api': resolve('./src/api'),
       '@components': resolve('./src/components'),
-      '@views': resolve('./src/views'),
+      '@views': resolve('./src/views')
     }
   },
   plugins: [
     new webpack.ProvidePlugin({
-      prismplayer: "prismplayer",
+      prismplayer: 'prismplayer',
       $: 'jquery',
       jQuery: 'jquery',
       jquery: 'jquery',
-      "window.jQuery": 'jquery'
+      'window.jQuery': 'jquery'
     })
   ],
   module: {
@@ -78,15 +78,19 @@ module.exports = {
       },
       {
         test: /\\\\\\\\.css$/,
-        loader: "style!css"
+        loader: 'style!css'
       },
       {
         test: /\\\\\\\\.(eot|woff|woff2|ttf)([\\\\\\\\?]?.*)$/,
-        loader: "file"
+        loader: 'file'
       },
       {
-        test: /\.scss$/, 
-        loaders: ['style', 'css', 'sass'] 
+        test: /\.scss$/,
+        loaders: ['style', 'css', 'sass']
+      },
+      {
+        test: /\.less$/,
+        loaders: ['style', 'css', 'less']
       }
     ]
   },

@@ -1,7 +1,6 @@
 <template>
   <a-layout id="components-layout-demo-responsive" style="min-height: 100vh">
     <a-layout-sider
-
       v-model="collapsed">
       <div class="logo" />
       <left-nav @add_tab="addTab"/>
@@ -72,7 +71,7 @@ export default {
   transition: color 0.3s;
 }
 
-::v-deep .ant-layout-footer {
+/deep/ .ant-layout-footer {
     padding: 14px 25px;
     color: rgba(0, 0, 0, 0.65);
     font-size: 14px;

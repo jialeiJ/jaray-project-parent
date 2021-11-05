@@ -44,11 +44,7 @@ public class SysUserController {
     @PreAuthorize("hasAuthority('sys:user:add')")
     public ResponseResult add(SysUser sysUserEntity) {
         ResponseResult resultMsg = null;
-        try {
-            resultMsg = sysUserService.add(sysUserEntity);
-        } catch (Exception e) {
-            log.error("add Method Exception", e);
-        }
+        resultMsg = sysUserService.add(sysUserEntity);
         return resultMsg;
     }
 

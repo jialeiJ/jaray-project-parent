@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import store from '@/store'
 
 import zhCn from 'ant-design-vue/lib/locale-provider/zh_CN'
 export default {
@@ -45,6 +46,10 @@ export default {
     // window.onbeforeunload = function() {
     //   beginTime = new Date().getTime()
     // }
+    // 监听刷新事件
+    window.addEventListener('unload', function() {
+      sessionStorage.setItem('state', JSON.stringify(store.state))
+    })
   }
 }
 </script>

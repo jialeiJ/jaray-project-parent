@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-table
+    <a-table
       :data="tableData"
       :key="iKey"
       :height="tableHeight"
@@ -13,15 +13,17 @@
       @selection-change="handleSelectionChange"
       @filter-change="handlerFilterChange"
       @row-click="rowClick">
-      <el-table-column
+      <a-table-column
         type="selection"
         width="40"/>
       <template v-for="(item, key) in tableTitle" >
-        <el-table-column
+        <a-table-column
           :key="key"
           :prop="item.prop"
           :label="item.label"
           :width="item.width"
+          :fixed="item.fixed"
+          :ellipsis="true"
           :sortable="item.sort"
           :column-key="item.prop"
           :filters="item.filters?item.filters:null"
@@ -55,16 +57,16 @@
             </span>
             <span v-else>{{ scope.row[item.prop] }}</span>
           </template>
-        </el-table-column>
+        </a-table-column>
       </template>
-    </el-table>
+    </a-table>
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'ITable',
+  name: 'ITreeTable',
   props: {
     tableTitle: {
       type: Array,
@@ -140,6 +142,6 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
 
 </style>

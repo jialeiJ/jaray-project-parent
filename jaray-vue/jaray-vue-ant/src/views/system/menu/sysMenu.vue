@@ -60,18 +60,18 @@ export default {
       editDialogFormVisible: false,
       search: '',
       tableTitle: [
-        { title: 'ID', dataIndex: 'id', key: 'id', fixed: true, width: '120px' },
-        { title: '名称', dataIndex: 'name', key: 'name', width: '160px', filters: [] },
-        { title: '类型', dataIndex: 'type', key: 'type', width: '160px', formatter: this.typeFormatter, tagRender: this.tagRender },
-        { title: '链接', dataIndex: 'url', key: 'url', width: '240px' },
-        { title: '图标', dataIndex: 'icon', key: 'icon', width: '160px' },
-        { title: '排序', dataIndex: 'orderNum', key: 'orderNum', width: '160px' },
-        { title: '创建人', dataIndex: 'createBy', key: 'createBy', width: '160px' },
-        { title: '创建时间', dataIndex: 'createTime', key: 'createTime', width: '160px', formatter: this.dateTimeFormatter },
-        { title: '更新人', dataIndex: 'lastUpdateBy', key: 'lastUpdateBy', width: '160px' },
-        { title: '更新时间', dataIndex: 'lastUpdateTime', key: 'lastUpdateTime', width: '160px', formatter: this.dateTimeFormatter },
+        { title: 'ID', dataIndex: 'id', key: 'id', fixed: 'left', width: 100 },
+        { title: '名称', dataIndex: 'name', key: 'name', filters: [] },
+        { title: '类型', dataIndex: 'type', key: 'type', formatter: this.typeFormatter, tagRender: this.tagRender },
+        { title: '链接', dataIndex: 'url', key: 'url' },
+        { title: '图标', dataIndex: 'icon', key: 'icon' },
+        { title: '排序', dataIndex: 'orderNum', key: 'orderNum' },
+        { title: '创建人', dataIndex: 'createBy', key: 'createBy' },
+        { title: '创建时间', dataIndex: 'createTime', key: 'createTime', formatter: this.dateTimeFormatter },
+        { title: '更新人', dataIndex: 'lastUpdateBy', key: 'lastUpdateBy' },
+        { title: '更新时间', dataIndex: 'lastUpdateTime', key: 'lastUpdateTime', formatter: this.dateTimeFormatter },
         // 此处为操作栏，不需要可以删除，clickFun绑定此操作按钮的事件
-        { prop: 'operation', label: '操作', fixed: 'right', width: '120px',
+        { prop: 'operation', title: '操作', dataIndex: 'operation', key: 'operation', fixed: 'right', width: 140,
           operation: [
             { name: '查看', style: 'primary', clickFun: this.viewSysMenu, disabled: this.hasPermission('sys:menu:view') },
             { name: '修改', style: 'primary', clickFun: this.editViewSysMenu, disabled: this.hasPermission('sys:menu:edit') }
@@ -313,7 +313,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-::v-deep .el-dialog .el-dialog__body {
+/deep/ .el-dialog .el-dialog__body {
   border-top: 1px solid #dcdfe6;
   border-bottom: 1px solid #dcdfe6;
   max-height: calc(85vh - 260px);

@@ -1,21 +1,25 @@
 <template>
   <div id="view">
-    <el-dialog :visible.sync="viewDialogFormVisible" title="详情">
-      <el-form :model="form">
-        <el-form-item :label-width="formLabelWidth" label="标题">
-          <el-input v-model="form.title" readonly="readonly"/>
-        </el-form-item>
-        <el-form-item :label-width="formLabelWidth" label="描述">
-          <el-input v-model="form.desc" readonly="readonly"/>
-        </el-form-item>
-        <el-form-item :label-width="formLabelWidth" label="描述">
-          <el-input v-model="form.desc" type="textarea" readonly="readonly"/>
-        </el-form-item>
-      </el-form>
+    <a-modal
+      :visible.sync="viewDialogFormVisible"
+      title="详情"
+      @ok="handleOk"
+      @cancel="handleCancel">
+      <a-form :model="form">
+        <a-form-item :label-width="formLabelWidth" label="标题">
+          <a-input v-model="form.title" read-only/>
+        </a-form-item>
+        <a-form-item :label-width="formLabelWidth" label="描述">
+          <a-input v-model="form.desc" read-only/>
+        </a-form-item>
+        <a-form-item :label-width="formLabelWidth" label="描述">
+          <a-input v-model="form.desc" type="textarea" read-only/>
+        </a-form-item>
+      </a-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="viewDialogFormVisible = false">关闭</el-button>
+        <a-button type="primary" @click="viewDialogFormVisible = false">关闭</a-button>
       </div>
-    </el-dialog>
+    </a-modal>
   </div>
 </template>
 
@@ -50,6 +54,14 @@ export default {
           that.viewDialogFormVisible = true
         }
       })
+    },
+    handleOk(e) {
+      const that = this
+      that.viewDialogFormVisible = false
+    },
+    handleCancel(e) {
+      const that = this
+      that.viewDialogFormVisible = false
     }
   }
 }

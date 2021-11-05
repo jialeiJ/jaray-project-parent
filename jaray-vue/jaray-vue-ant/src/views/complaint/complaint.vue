@@ -3,14 +3,14 @@
     <div>
       <div id="table">
         <div style="margin-bottom: 10px">
-          <el-input
+          <a-input
             v-model="search"
             placeholder="请输入姓名"
             clearable
             style="width: 200px"/>
-          <el-button type="success" plain @click="initTable">查询</el-button>
-          <el-button type="success" plain @click="addComplaint">增加</el-button>
-          <el-button type="danger" plain @click="deleteComplaints">删除</el-button>
+          <a-button type="success" plain @click="initTable">查询</a-button>
+          <a-button type="success" plain @click="addComplaint">增加</a-button>
+          <a-button type="danger" plain @click="deleteComplaints">删除</a-button>
         </div>
         <i-table
           ref="iTable"
@@ -60,11 +60,11 @@ export default {
       tableHeight: 'calc(95vh - 200px)',
       search: '',
       tableTitle: [
-        { prop: 'cid', label: 'ID', fixed: true, sort: true },
-        { prop: 'title', label: '标题', sort: true, filters: [{ text: '投诉', value: '投诉' }], formatter: this.titleFormatter },
-        { prop: 'desc', label: '描述' },
+        { title: 'ID', dataIndex: 'cid', key: 'cid', fixed: true, sort: (a, b) => a.cid.localeCompare(b.cid), width: 150 },
+        { title: '标题', dataIndex: 'title', key: 'title', sort: true, filters: [{ text: '投诉', value: '投诉' }], formatter: this.titleFormatter },
+        { title: '描述', dataIndex: 'desc', key: 'desc' },
         // 此处为操作栏，不需要可以删除，clickFun绑定此操作按钮的事件
-        { prop: 'operation', label: '操作', fixed: 'right', width: 143,
+        { key: 'operation', title: '操作', fixed: 'right', width: 143,
           operation: [
             { name: '查看', style: 'primary', clickFun: this.viewComplaint, disabled: true },
             { name: '修改', style: 'primary', clickFun: this.editViewComplaint, disabled: true }
@@ -161,8 +161,8 @@ export default {
           const filters = []
           for (var j = 0; j < tableData.length; j++) {
             for (var item in tableData[j]) {
-              if (item === that.tableTitle[i].prop + '') { // item 表示Json串中的属性，如'title'
-                filters.push({ text: tableData[j][that.tableTitle[i].prop], value: tableData[j][that.tableTitle[i].prop] })
+              if (item === that.tableTitle[i].key + '') { // item 表示Json串中的属性，如'title'
+                filters.push({ text: tableData[j][that.tableTitle[i].key], value: tableData[j][that.tableTitle[i].key] })
               }
             }
           }

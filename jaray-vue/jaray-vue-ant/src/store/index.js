@@ -7,13 +7,16 @@ import * as actions from './actions'
 import * as mutations from './mutations'
 
 Vue.use(Vuex)
-// 首先声明一个需要全局维护的状态state，比如这里举例的collapsed
-const state = {
-  // 左侧菜单是否折叠标志
-  collapsed: false,
-  // 左侧菜单数据集合
-  leftMenus: []
+function initState() {
+  return {
+    // 左侧菜单是否折叠标志
+    collapsed: false,
+    // 左侧菜单数据集合
+    leftMenus: []
+  }
 }
+// 首先声明一个需要全局维护的状态state，比如这里举例的collapsed
+const state = sessionStorage.getItem('state') ? JSON.parse(sessionStorage.getItem('state')) : initState()
 
 // 注册上面引入的各大模块
 const store = new Vuex.Store({

@@ -274,7 +274,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-::v-deep .ant-menu-submenu,.ant-menu-item {
+/deep/ .ant-menu-submenu,.ant-menu-item {
   line-height: 64px;
   cursor: pointer;
   transition: color 0.3s;

@@ -7,7 +7,7 @@
           :tree-data="treeData"
           style="max-height: 400px;overflow-y: auto;"
           @rowClick="rowClick"
-          @transmitParentKeys="receiveKeys"/>
+          @transmit_parent_keys="receiveKeys"/>
         <div slot="footer" class="dialog-footer">
           <a-button size="small" @click="allChecked">全选</a-button>
           <a-button size="small" @click="clearTreeChecked">清空</a-button>
@@ -247,7 +247,7 @@ export default {
           that.initTable()
           that.$message.success('恭喜你，编辑成功')
           // 刷新左侧菜单（自己不能修改自己，所以不用刷新）
-          // that.refreshFindLeftNav()
+          that.refreshFindLeftNav()
         }
       })
     },
@@ -300,11 +300,11 @@ export default {
       const that = this
       for (var i = 0; i < that.tableTitle.length; i++) {
         if (that.tableTitle[i].filters) {
-          const filters = [[]]
+          const filters = []
           for (var j = 0; j < tableData.length; j++) {
             for (var item in tableData[j]) {
-              if (item === that.tableTitle[i].prop + '') { // item 表示Json串中的属性，如'title'
-                filters.push({ text: tableData[j][that.tableTitle[i].prop], value: tableData[j][that.tableTitle[i].prop] })
+              if (item === that.tableTitle[i].key + '') { // item 表示Json串中的属性，如'title'
+                filters.push({ text: tableData[j][that.tableTitle[i].key], value: tableData[j][that.tableTitle[i].key] })
               }
             }
           }

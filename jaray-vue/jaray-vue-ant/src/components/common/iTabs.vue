@@ -49,6 +49,7 @@ export default {
   },
   created: function() {
     const tempRoutes = this.$router.options.routes
+    const isRefresh = false
     for (let i = 0; i < tempRoutes.length; i++) {
       const temp = tempRoutes[i]
       if (temp.path === '/introduction') {
@@ -57,15 +58,30 @@ export default {
         menu.component = temp.component
         menu.path = temp.path
         menu.closable = false
-        this.addOneTab(menu)
+        this.addOneTab(menu, isRefresh)
       }
     }
   },
   mounted: function() {
+    const that = this
+    const isRefresh = true
+    const tabs = JSON.parse(sessionStorage.getItem('tabs'))
+    if (tabs) {
+      var tabsPromise = new Promise(function(resolve, reject) {
+        tabs.forEach(tab => {
+          that.addTab(tab, isRefresh)
+        })
+        resolve()
+      })
 
+      tabsPromise.then(function() {
+        that.activeKey = sessionStorage.getItem('activeKey')
+        console.log(that.activeKey)
+      })
+    }
   },
   methods: {
-    addOneTab(menu) {
+    addOneTab(menu, isRefresh) {
       const that = this
       var exist = false
       for (var i = 0; i < that.tabs.length; i++) {
@@ -76,7 +92,9 @@ export default {
         }
       }
       if (exist === true) {
-        that.activeKey = menu.name
+        if (!isRefresh) {
+          that.activeKey = menu.name
+        }
         return
       } else {
         that.index = that.tabs.length
@@ -89,28 +107,33 @@ export default {
         path: menu.path
       })
 
-      that.activeKey = menu.name
+      if (!isRefresh) {
+        that.activeKey = menu.name
+      }
+
+      if (menu.path !== '/introduction') {
+        sessionStorage.setItem('tabs', JSON.stringify(that.tabs))
+      }
+      console.log(that.index)
 
       that.render()
     },
-    addTab(params) {
+    addTab(params, isRefresh) {
       const that = this
       const tempRoutes = that.$router.options.routes
+      const menu = {}
       for (let i = 0; i < tempRoutes.length; i++) {
         const temp = tempRoutes[i]
         if (temp.path === params.path) {
-          const menu = {}
           menu.name = temp.title
           menu.component = temp.component
           menu.path = params.path
-          that.addOneTab(menu)
+          that.addOneTab(menu, isRefresh)
         }
       }
 
       if (params.path && (params.path.indexOf('http') === 0 || params.path.indexOf('https') === 0)) {
         setTimeout(function() {
-          // console.log(that.$refs.iframe[0].contentWindow.location)
-          // console.log(that.$refs.iframe[0].contentWindow.location.replace(params.path))
           that.$refs.iframe[0].contentWindow.location.href = params.path
         }, 10000)
 
@@ -118,12 +141,16 @@ export default {
         that.iframeComponent = Vue.component('iframe-component', {
           template: '<iframe id="' + uid + '" name="' + uid + '" src="' + params.path + '" scrolling="yes" width="100%" height="100%" frameborder="0" style="height: calc(95vh - 100px);overflow: auto;"></iframe>'
         })
-        const menu = {}
+
         menu.name = params.title
         menu.component = that.iframeComponent.options
         menu.path = params.path
         that.index++
-        that.addOneTab(menu)
+        that.addOneTab(menu, isRefresh)
+      }
+
+      if (!isRefresh) {
+        sessionStorage.setItem('activeKey', menu.name)
       }
     },
     tabEdit(targetKey, action) {
@@ -140,13 +167,22 @@ export default {
           }
         })
       }
-      that.index--
       that.activeKey = activeName
       that.tabs = tabs.filter(tab => tab.name !== targetKey)
+
+      that.tabs.forEach((tab, index) => {
+        if (tab.name === activeName) {
+          that.index = index
+        }
+      })
+
+      sessionStorage.setItem('tabs', JSON.stringify(that.tabs))
+      sessionStorage.setItem('activeKey', that.activeKey)
     },
     tabChange(activeKey) {
       const that = this
       that.activeKey = activeKey
+      sessionStorage.setItem('activeKey', that.activeKey)
     },
     render: function() {
       const that = this

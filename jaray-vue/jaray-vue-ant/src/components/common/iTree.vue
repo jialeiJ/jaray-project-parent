@@ -88,14 +88,15 @@ export default {
       const allKeys = checkedKeys.concat(event.halfCheckedKeys)
       that.tileTreeData.forEach(function(item, index) {
         if (allKeys.indexOf(item.id) > -1) {
-          if (keys.indexOf(item.parent_id) === -1) {
-            keys.push(item.parent_id)
+          if (keys.indexOf(item.parentId) === -1 && item.parentId) {
+            keys.push(item.parentId)
           }
           keys.push(item.id)
         }
       })
 
-      that.$emit('transmitParentKeys', keys)
+      that.resetChecked(checkedKeys)
+      that.$emit('transmit_parent_keys', keys)
     },
     onSelect(selectedKeys, info) {
       console.log('onSelect', info)
@@ -112,14 +113,14 @@ export default {
       })
       that.checkedKeys = keys
       // that.$refs.tree.setCheckedKeys(keys);
-      that.$emit('transmitParentKeys', keys)
+      that.$emit('transmit_parent_keys', keys)
     },
     // 重置
     resetChecked(keys) {
       const that = this
       // 移除父id
       that.tileTreeData.forEach(function(item, index) {
-        const i = keys.indexOf(item.parent_id)
+        const i = keys.indexOf(item.parentId)
         if (i > -1) {
           // keys.splice(i,1)
         }

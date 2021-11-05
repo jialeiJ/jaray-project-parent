@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import store from '@/store'
 import { mapActions, mapGetters } from 'vuex'
 import API from '../../api/api_system'
 
@@ -112,6 +113,8 @@ export default {
       API.findLeftNav(params).then(function(result) {
         if (result.code === 200) {
           that.leftMenus = result.map.leftMenu
+          // 防止菜单权限未刷新，导致没权限按钮存在
+          sessionStorage.setItem('state', JSON.stringify(store.state))
         }
       })
     },

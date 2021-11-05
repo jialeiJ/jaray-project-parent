@@ -157,7 +157,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-::v-deep .ant-modal .ant-modal-body {
+/deep/ .ant-modal .ant-modal-body {
     border-top: 1px solid #dcdfe6;
     border-bottom: 1px solid #dcdfe6;
     max-height: calc(85vh - 260px);
