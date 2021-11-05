@@ -1,13 +1,9 @@
-package com.vienna.jaray.service;
+package com.vienna.jaray.service.common;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 
 /**
  * 上传服务类

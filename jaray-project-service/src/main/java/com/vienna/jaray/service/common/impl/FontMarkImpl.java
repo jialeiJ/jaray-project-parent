@@ -1,27 +1,22 @@
-package com.vienna.jaray.service.impl;
+package com.vienna.jaray.service.common.impl;
 
-import com.vienna.jaray.service.Mark;
+import com.vienna.jaray.service.common.Mark;
 import lombok.extern.slf4j.Slf4j;
 
-import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Image;
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import javax.imageio.ImageIO;
-
 /**
- * 多文字水印实现类
+ * 单文字水印实现类
  * @author Jaray
  */
 @Slf4j
-public class MoreFontMarkImpl implements Mark {
+public class FontMarkImpl implements Mark {
 
 	@Override
 	public String watermark(InputStream image, String imageFileName,
@@ -42,7 +37,7 @@ public class MoreFontMarkImpl implements Mark {
 			g.drawImage(img, 0, 0, width, height, null);
 			// 设置水印字体信息
 			g.setFont(new Font(FONT_NAME, FONT_STYLE, FONT_SIZE));
-			g.setColor(Color.gray);
+			g.setColor(FONT_COLOR);
 			// 获取计算后的文字真实宽度值
 			int realWidth = FONT_SIZE * getTextLength(MARK_TEXT);
 			int realHeight = FONT_SIZE;
@@ -50,22 +45,11 @@ public class MoreFontMarkImpl implements Mark {
 			// 设置透明度
 			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, ALPHA));
 			// 指定旋转角度和旋转中心
-			g.rotate(Math.toRadians(30),bufferedImage.getWidth()/2,bufferedImage.getHeight()/2);
+			g.rotate(Math.toRadians(0),bufferedImage.getWidth()/2,bufferedImage.getHeight()/2);
 
-			int x = - width / 2;
-			int y = - height / 2;
+			// 打印水印
+			g.drawString(MARK_TEXT, width - realWidth, height - realHeight + 25);
 
-			// 循环打印水印
-			while(x < width * 1.5){
-				y = - height / 2;
-				while(y < height * 1.5){
-					g.drawString(MARK_TEXT, x, y);
-					// 行间距
-					y += realHeight + 30;
-				}
-				// 间距
-				x += realWidth + 30;
-			}
 			//4.使用绘图工具对象将水印（文字/图片）绘制到缓存图片
 			g.dispose();
 
@@ -73,17 +57,17 @@ public class MoreFontMarkImpl implements Mark {
 			ImageIO.write(bufferedImage, "JPG", os);
 
 		}catch(Exception e){
-			log.error("多文字水印异常", e);
+			log.error("单文字水印异常", e);
 		}
 
 		return uploadPath + File.separator + logoFileName;
 	}
 
 	/**
-	 * 判断文字是中文还是英文--获取文本宽度值---->中文：英文=2:1
+     * 判断文字是中文还是英文--获取文本宽度值---->中文：英文=2:1
 	 * @param text
-	 * @return
-	 */
+     * @return
+     */
 	public int getTextLength(String text){
 		int length = text.length();
 

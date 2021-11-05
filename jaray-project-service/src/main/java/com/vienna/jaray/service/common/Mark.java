@@ -1,7 +1,6 @@
-package com.vienna.jaray.service;
+package com.vienna.jaray.service.common;
 
-import java.awt.Color;
-import java.awt.Font;
+import java.awt.*;
 import java.io.InputStream;
 
 public interface Mark {

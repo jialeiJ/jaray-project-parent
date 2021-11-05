@@ -1,8 +1,6 @@
-package com.vienna.jaray.service.impl;
+package com.vienna.jaray.service.common.impl;
 
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
-import com.vienna.jaray.service.Mark;
+import com.vienna.jaray.service.common.Mark;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.imageio.ImageIO;
