@@ -25,7 +25,6 @@ public class SysMenuController {
 
     @LogAnnotation(value = "查询菜单列表")
     @PostMapping("/find/all")
-    @PreAuthorize("hasAuthority('sys:menu:view')")
     public ResponseResult findTreeAll(CommonParamsModel commonParamsModel) {
         ResponseResult resultMsg = null;
         try {
@@ -38,7 +37,6 @@ public class SysMenuController {
 
     @LogAnnotation(value = "添加菜单")
     @PostMapping("/add")
-    @PreAuthorize("hasAuthority('sys:menu:add')")
     public ResponseResult add(SysMenu sysMenuEntity) {
         ResponseResult resultMsg = null;
         try {
@@ -51,7 +49,6 @@ public class SysMenuController {
 
     @LogAnnotation(value = "删除菜单")
     @PostMapping("/delete")
-    @PreAuthorize("hasAuthority('sys:menu:delete')")
     public ResponseResult deleteByIds(String[] ids) {
         ResponseResult resultMsg = null;
         try {
@@ -64,7 +61,6 @@ public class SysMenuController {
 
     @LogAnnotation(value = "更新菜单")
     @PostMapping("/update")
-    @PreAuthorize("hasAuthority('sys:menu:edit')")
     public ResponseResult updateById(SysMenu sysMenuEntity) {
         ResponseResult resultMsg = null;
         try {
@@ -77,7 +73,6 @@ public class SysMenuController {
 
     @LogAnnotation(value = "查询菜单")
     @PostMapping("/find")
-    @PreAuthorize("hasAuthority('sys:menu:view')")
     public ResponseResult findById(String id) {
         ResponseResult resultMsg = null;
         try {

@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
  * @description: 用户详情服务实现类
  */
 @Slf4j
+@Component
 public class UserDetailsServiceImpl implements UserDetailsService {
 	private static final String USERNAME_ADMIN = "admin";
 	@Autowired

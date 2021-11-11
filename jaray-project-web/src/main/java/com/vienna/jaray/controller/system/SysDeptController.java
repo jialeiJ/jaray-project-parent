@@ -25,7 +25,6 @@ public class SysDeptController {
 
     @LogAnnotation(value = "查询部门列表")
     @PostMapping("/find/all")
-    @PreAuthorize("hasAuthority('sys:dept:view')")
     public ResponseResult findAll(CommonParamsModel commonParamsModel) {
         ResponseResult resultMsg = null;
         try {
@@ -38,7 +37,6 @@ public class SysDeptController {
 
     @LogAnnotation(value = "添加部门")
     @PostMapping("/add")
-    @PreAuthorize("hasAuthority('sys:dept:add')")
     public ResponseResult add(SysDept sysDeptEntity) {
         ResponseResult resultMsg = null;
         try {
@@ -51,7 +49,6 @@ public class SysDeptController {
 
     @LogAnnotation(value = "删除部门")
     @PostMapping("/delete")
-    @PreAuthorize("hasAuthority('sys:dept:delete')")
     public ResponseResult deleteByIds(String ids) {
         ResponseResult resultMsg = null;
         try {
@@ -64,7 +61,6 @@ public class SysDeptController {
 
     @LogAnnotation(value = "更新部门")
     @PostMapping("/update")
-    @PreAuthorize("hasAuthority('sys:dept:edit')")
     public ResponseResult updateById(SysDept sysDeptEntity) {
         ResponseResult resultMsg = null;
         try {
@@ -78,7 +74,6 @@ public class SysDeptController {
 
     @LogAnnotation(value = "查询部门")
     @PostMapping("/find")
-    @PreAuthorize("hasAuthority('sys:dept:view')")
     public ResponseResult findById(String id) {
         ResponseResult resultMsg = null;
         try {

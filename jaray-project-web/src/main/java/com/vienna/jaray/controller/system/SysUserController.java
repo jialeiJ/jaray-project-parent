@@ -28,7 +28,6 @@ public class SysUserController {
 
     @LogAnnotation(value = "查询用户列表")
     @PostMapping("/find/all")
-    @PreAuthorize("hasAuthority('sys:user:view')")
     public ResponseResult findAll(CommonParamsModel commonParamsModel) {
         ResponseResult resultMsg = null;
         try {
@@ -41,7 +40,6 @@ public class SysUserController {
 
     @LogAnnotation(value = "添加用户")
     @PostMapping("/add")
-    @PreAuthorize("hasAuthority('sys:user:add')")
     public ResponseResult add(SysUser sysUserEntity) {
         ResponseResult resultMsg = null;
         resultMsg = sysUserService.add(sysUserEntity);
@@ -50,7 +48,6 @@ public class SysUserController {
 
     @LogAnnotation(value = "删除用户")
     @PostMapping("/deleteByIds")
-    @PreAuthorize("hasAuthority('sys:user:delete')")
     public ResponseResult deleteByIds(String ids) {
         ResponseResult resultMsg = null;
         try {
@@ -63,7 +60,6 @@ public class SysUserController {
 
     @LogAnnotation(value = "更新用户")
     @PostMapping("/updateById")
-    @PreAuthorize("hasAuthority('sys:user:edit')")
     public ResponseResult updateById(SysUser sysUserEntity) {
         ResponseResult resultMsg = null;
         try {
@@ -77,7 +73,6 @@ public class SysUserController {
 
     @LogAnnotation(value = "查询用户")
     @PostMapping("/findById")
-    @PreAuthorize("hasAuthority('sys:user:view')")
     public ResponseResult findById(String id) {
         ResponseResult resultMsg = null;
         try {

@@ -25,7 +25,6 @@ public class SysDictController {
 
     @LogAnnotation(value = "查询字典列表")
     @PostMapping("/find/all")
-    @PreAuthorize("hasAuthority('sys:dict:view')")
     public ResponseResult findAll(CommonParamsModel commonParamsModel) {
         ResponseResult resultMsg = null;
         try {
@@ -38,7 +37,6 @@ public class SysDictController {
 
     @LogAnnotation(value = "添加字典")
     @PostMapping("/add")
-    @PreAuthorize("hasAuthority('sys:dict:add')")
     public ResponseResult add(SysDict sysDictEntity) {
         ResponseResult resultMsg = null;
         try {
@@ -51,7 +49,6 @@ public class SysDictController {
 
     @LogAnnotation(value = "删除字典")
     @PostMapping("/delete")
-    @PreAuthorize("hasAuthority('sys:dict:delete')")
     public ResponseResult deleteByIds(String ids) {
         ResponseResult resultMsg = null;
         try {
@@ -64,7 +61,6 @@ public class SysDictController {
 
     @LogAnnotation(value = "更新字典")
     @PostMapping("/update")
-    @PreAuthorize("hasAuthority('sys:dict:edit')")
     public ResponseResult updateById(SysDict sysDictEntity) {
         ResponseResult resultMsg = null;
         try {
@@ -78,7 +74,6 @@ public class SysDictController {
 
     @LogAnnotation(value = "查询字典")
     @PostMapping("/find")
-    @PreAuthorize("hasAuthority('sys:dict:view')")
     public ResponseResult findById(String id) {
         ResponseResult resultMsg = null;
         try {

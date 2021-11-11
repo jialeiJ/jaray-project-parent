@@ -94,7 +94,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					.accessDeniedHandler(new JwtAuthAccessDeniedHandler())
 					.authenticationEntryPoint(new JwtAuthEntryPoint());
 		} else {
-			http.cors().and().csrf().disable().authorizeRequests().anyRequest().permitAll().and().formLogin().permitAll().and().logout().permitAll();
+			// http.cors().and().csrf().disable().authorizeRequests().anyRequest().permitAll().and().formLogin().permitAll().and().logout().permitAll();
+			http.cors().and().csrf().disable().anonymous();
 		}
 
 	}

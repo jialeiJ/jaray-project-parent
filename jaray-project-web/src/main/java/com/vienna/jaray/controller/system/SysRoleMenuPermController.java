@@ -61,7 +61,6 @@ public class SysRoleMenuPermController {
 
     @LogAnnotation(value = "更新角色菜单权限")
     @PostMapping("/update")
-    @PreAuthorize("hasAuthority('sys:role:edit')")
     public ResponseResult updateByRid(String roleId, String menuPermId) {
         ResponseResult resultMsg = null;
         try {
