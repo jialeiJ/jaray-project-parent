@@ -47,7 +47,7 @@ public class SystemController {
     }
 
     @PostMapping("/login")
-    public ResponseResult login(@NotEmpty @Length(min = 2, message = "用户名至少2位") String username, String password, String captcha) {
+    public ResponseResult login(String username, String password, String captcha) {
         return systemService.login(request, username, password, captcha, session);
     }
 

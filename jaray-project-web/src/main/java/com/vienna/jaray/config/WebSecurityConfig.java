@@ -2,6 +2,7 @@ package com.vienna.jaray.config;
 
 import com.vienna.jaray.security.JwtAuthAccessDeniedHandler;
 import com.vienna.jaray.security.JwtAuthEntryPoint;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -33,60 +34,69 @@ import com.vienna.jaray.security.UserDetailsServiceImpl;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+	@Value("${security.enabled}")
+	private boolean enableSecurity;
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// 解决SpringSecurity不能加载iframe
 		http.headers().frameOptions().disable();
 		http.csrf().ignoringAntMatchers("/druid/**");
-		// 禁用 csrf, 由于使用的是JWT，我们这里不需要csrf
-        http.cors().and().csrf().disable()
-            .authorizeRequests()
-			// 跨域预检请求
-            .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-			// 静态资源
-			.antMatchers("/**/*.html", "/**/*.js", "/**/*.css", "/**/*.woff", "/**/*.ttf", "**/favicon.ico").permitAll()
-			// web jars
-            .antMatchers("/webjars/**").permitAll()
-			// SQL监控（druid）
-            .antMatchers("/druid/**").permitAll()
-			// 验证码
-			.antMatchers("/system/captcha.jpg").permitAll()
-			// 登录页面
-            .antMatchers("/").permitAll()
-			.antMatchers("/login").permitAll()
-			.antMatchers("/main").permitAll()
-			// vue打包文件
-			.antMatchers("/index.html").permitAll()
-			// 登录请求
-            .antMatchers("/system/login").permitAll()
-			// 刷新token
-			.antMatchers("/system/refreshToken").permitAll()
-			// 流程图
-			.antMatchers("/flow/diagram").permitAll()
-			// excel导出
-			.antMatchers("/**/excel/**").permitAll()
-			// swagger
-            .antMatchers("/swagger-ui.html").permitAll()
-            .antMatchers("/swagger-resources").permitAll()
-            .antMatchers("/v2/api-docs").permitAll()
-            .antMatchers("/webjars/springfox-swagger-ui/**").permitAll()
-			// 服务监控
-            .antMatchers("/actuator/**").permitAll()
-            .anyRequest().authenticated()
-			// 不需要session
-			.and()
-			.sessionManagement()
-			// 其他所有请求需要身份认证
-			.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		// 禁用缓存
-		http.headers().cacheControl();
-        // 登录及认证过滤器
-        http.addFilterBefore(new JwtAuthenticationFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class);
+		if (enableSecurity) {
+			// 禁用 csrf, 由于使用的是JWT，我们这里不需要csrf
+			http.cors().and().csrf().disable()
+					.authorizeRequests()
+					// 跨域预检请求
+					.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+					// 静态资源
+					.antMatchers("/**/*.html", "/**/*.js", "/**/*.css", "/**/*.woff", "/**/*.ttf", "**/favicon.ico").permitAll()
+					// web jars
+					.antMatchers("/webjars/**").permitAll()
+					// SQL监控（druid）
+					.antMatchers("/druid/**").permitAll()
+					// 验证码
+					.antMatchers("/system/captcha.jpg").permitAll()
+					// 登录页面
+					.antMatchers("/").permitAll()
+					.antMatchers("/login").permitAll()
+					.antMatchers("/main").permitAll()
+					// vue打包文件
+					.antMatchers("/index.html").permitAll()
+					// 登录请求
+					.antMatchers("/system/login").permitAll()
+					// 刷新token
+					.antMatchers("/system/refreshToken").permitAll()
+					// 流程图
+					.antMatchers("/flow/diagram").permitAll()
+					// excel导出
+					.antMatchers("/**/excel/**").permitAll()
+					// swagger
+					.antMatchers("/swagger-ui.html").permitAll()
+					.antMatchers("/swagger-resources").permitAll()
+					.antMatchers("/v2/api-docs").permitAll()
+					.antMatchers("/webjars/springfox-swagger-ui/**").permitAll()
+					// 服务监控
+					.antMatchers("/actuator/**").permitAll()
+					.anyRequest().authenticated()
+					// 不需要session
+					.and()
+					.sessionManagement()
+					// 其他所有请求需要身份认证
+					.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+			// 禁用缓存
+			http.headers().cacheControl();
+			// 登录及认证过滤器
+			http.addFilterBefore(new JwtAuthenticationFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class);
 
-		// 添加自定义未授权和未登录结果返回
-		http.exceptionHandling()
-			.accessDeniedHandler(new JwtAuthAccessDeniedHandler())
-			.authenticationEntryPoint(new JwtAuthEntryPoint());
+			// 添加自定义未授权和未登录结果返回
+			http.exceptionHandling()
+					.accessDeniedHandler(new JwtAuthAccessDeniedHandler())
+					.authenticationEntryPoint(new JwtAuthEntryPoint());
+		} else {
+			http.cors().and().csrf().disable().authorizeRequests().anyRequest().permitAll().and().formLogin().permitAll().and().logout().permitAll();
+		}
+
 	}
 	
 	/**

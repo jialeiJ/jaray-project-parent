@@ -1,6 +1,7 @@
 package com.vienna.jaray.utils;
 
 import com.vienna.jaray.security.JwtAuthenticatioToken;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  * @date 2020年09月12日 13:58
  * @description: 安全工具类
  */
+@Slf4j
 public class SecurityUtil {
 	
 	/**
@@ -38,7 +40,7 @@ public class SecurityUtil {
 			token.setToken(JwtTokenUtil.generateToken(authentication));
 			token.setExpireTime(JwtTokenUtil.tokenExpireTime(token.getToken()));
 		}catch (Exception e){
-        	
+        	log.error("登录认证异常", e);
 		}
 
         return token;
