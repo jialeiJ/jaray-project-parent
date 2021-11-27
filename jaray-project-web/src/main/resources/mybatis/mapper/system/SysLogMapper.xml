@@ -23,7 +23,41 @@
         l.create_by,l.create_time,l.last_update_by,l.last_update_time
     </sql>
 
-    <!-- 查询字典列表 -->
+    <!-- 分页查询字典列表 Srart -->
+    <select id="findIdsByPage_COUNT" resultType="Long">
+        select count(1)
+        from sys_log l
+        <where>
+            id > -1
+            <if test="common.search != null and common.search != ''">
+                and ( l.operation like concat(#{common.search}) or l.operation like concat(#{common.search}) )
+            </if>
+        </where>
+    </select>
+    <select id="findIdsByPage" resultMap="CommonResultMap">
+        select id
+        from sys_log l
+        <where>
+            id > -1
+            <if test="common.search != null and common.search != ''">
+                and ( l.operation like concat(#{common.search}) or l.operation like concat(#{common.search}) )
+            </if>
+        </where>
+    </select>
+    <select id="findAllByPage" resultMap="CommonResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from
+            <foreach collection="idList" item="item" index="index" open="(" separator="UNION ALL" close=")">
+                select #{item} as id
+            </foreach> t
+        left join sys_log l on t.id = l.id
+        <where>
+            l.id > 'U'
+        </where>
+    </select>
+
+    <!-- 原有的 -->
     <select id="findAll" resultMap="CommonResultMap">
         select
         <include refid="Base_Column_List" />
@@ -36,6 +70,7 @@
         </where>
         order by l.create_time desc
     </select>
+    <!-- 分页查询字典列表 End -->
 
     <!-- 添加字典 -->
     <insert id="add">

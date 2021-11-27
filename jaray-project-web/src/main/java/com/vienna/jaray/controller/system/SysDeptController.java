@@ -26,61 +26,31 @@ public class SysDeptController {
     @LogAnnotation(value = "查询部门列表")
     @PostMapping("/find/all")
     public ResponseResult findAll(CommonParamsModel commonParamsModel) {
-        ResponseResult resultMsg = null;
-        try {
-            resultMsg = sysDeptService.findAllTop(commonParamsModel);
-        } catch (Exception e) {
-            log.error("findAll Method Exception", e);
-        }
-        return resultMsg;
+        return sysDeptService.findAllTop(commonParamsModel);
     }
 
     @LogAnnotation(value = "添加部门")
     @PostMapping("/add")
     public ResponseResult add(SysDept sysDeptEntity) {
-        ResponseResult resultMsg = null;
-        try {
-            resultMsg = sysDeptService.add(sysDeptEntity);
-        } catch (Exception e) {
-            log.error("add Method Exception", e);
-        }
-        return resultMsg;
+        return sysDeptService.add(sysDeptEntity);
     }
 
     @LogAnnotation(value = "删除部门")
     @PostMapping("/delete")
     public ResponseResult deleteByIds(String ids) {
-        ResponseResult resultMsg = null;
-        try {
-            resultMsg = sysDeptService.deleteByIds(ids.split(","));
-        } catch (Exception e) {
-            log.error("deleteByIds Method Exception", e);
-        }
-        return resultMsg;
+        return sysDeptService.deleteByIds(ids.split(","));
     }
 
     @LogAnnotation(value = "更新部门")
     @PostMapping("/update")
     public ResponseResult updateById(SysDept sysDeptEntity) {
-        ResponseResult resultMsg = null;
-        try {
-            resultMsg = sysDeptService.updateById(sysDeptEntity);
-        } catch (Exception e) {
-            log.error("updateById Method Exception", e);
-        }
-        return resultMsg;
+        return sysDeptService.updateById(sysDeptEntity);
     }
 
 
     @LogAnnotation(value = "查询部门")
     @PostMapping("/find")
     public ResponseResult findById(String id) {
-        ResponseResult resultMsg = null;
-        try {
-            resultMsg = sysDeptService.findById(id);
-        } catch (Exception e) {
-            log.error("findById Method Exception", e);
-        }
-        return resultMsg;
+        return sysDeptService.findById(id);
     }
 }

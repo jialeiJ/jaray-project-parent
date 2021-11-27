@@ -26,61 +26,31 @@ public class SysRoleController {
     @LogAnnotation(value = "查询角色列表")
     @PostMapping("/find/all")
     public ResponseResult findAll(CommonParamsModel commonParamsModel) {
-        ResponseResult resultMsg = null;
-        try {
-            resultMsg = sysRoleService.findAll(commonParamsModel);
-        } catch (Exception e) {
-            log.error("findAll Method Exception", e);
-        }
-        return resultMsg;
+        return sysRoleService.findAll(commonParamsModel);
     }
 
     @LogAnnotation(value = "添加角色")
     @PostMapping("/add")
     public ResponseResult add(SysRole sysRoleEntity) {
-        ResponseResult resultMsg = null;
-        try {
-            resultMsg = sysRoleService.add(sysRoleEntity);
-        } catch (Exception e) {
-            log.error("add Method Exception", e);
-        }
-        return resultMsg;
+        return sysRoleService.add(sysRoleEntity);
     }
 
     @LogAnnotation(value = "删除角色")
     @PostMapping("/delete")
     public ResponseResult deleteByIds(String ids) {
-        ResponseResult resultMsg = null;
-        try {
-            resultMsg = sysRoleService.deleteByIds(ids.split(","));
-        } catch (Exception e) {
-            log.error("deleteByIds Method Exception", e);
-        }
-        return resultMsg;
+        return sysRoleService.deleteByIds(ids.split(","));
     }
 
     @LogAnnotation(value = "更新角色")
     @PostMapping("/update")
     public ResponseResult updateById(SysRole sysRoleEntity) {
-        ResponseResult resultMsg = null;
-        try {
-            resultMsg = sysRoleService.updateById(sysRoleEntity);
-        } catch (Exception e) {
-            log.error("updateById Method Exception", e);
-        }
-        return resultMsg;
+        return sysRoleService.updateById(sysRoleEntity);
     }
 
 
     @LogAnnotation(value = "查询角色")
     @PostMapping("/find")
     public ResponseResult findById(String id) {
-        ResponseResult resultMsg = null;
-        try {
-            resultMsg = sysRoleService.findById(id);
-        } catch (Exception e) {
-            log.error("findById Method Exception", e);
-        }
-        return resultMsg;
+        return sysRoleService.findById(id);
     }
 }

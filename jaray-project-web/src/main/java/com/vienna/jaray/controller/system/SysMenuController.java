@@ -26,60 +26,30 @@ public class SysMenuController {
     @LogAnnotation(value = "查询菜单列表")
     @PostMapping("/find/all")
     public ResponseResult findTreeAll(CommonParamsModel commonParamsModel) {
-        ResponseResult resultMsg = null;
-        try {
-            resultMsg = sysMenuService.findTreeAll(commonParamsModel);
-        } catch (Exception e) {
-            log.error("findTreeAll Method Exception", e);
-        }
-        return resultMsg;
+        return sysMenuService.findTreeAll(commonParamsModel);
     }
 
     @LogAnnotation(value = "添加菜单")
     @PostMapping("/add")
     public ResponseResult add(SysMenu sysMenuEntity) {
-        ResponseResult resultMsg = null;
-        try {
-            resultMsg = sysMenuService.add(sysMenuEntity);
-        } catch (Exception e) {
-            log.error("add Method Exception", e);
-        }
-        return resultMsg;
+        return sysMenuService.add(sysMenuEntity);
     }
 
     @LogAnnotation(value = "删除菜单")
     @PostMapping("/delete")
     public ResponseResult deleteByIds(String[] ids) {
-        ResponseResult resultMsg = null;
-        try {
-            resultMsg = sysMenuService.deleteByIds(ids);
-        } catch (Exception e) {
-            log.error("deleteByIds Method Exception", e);
-        }
-        return resultMsg;
+        return sysMenuService.deleteByIds(ids);
     }
 
     @LogAnnotation(value = "更新菜单")
     @PostMapping("/update")
     public ResponseResult updateById(SysMenu sysMenuEntity) {
-        ResponseResult resultMsg = null;
-        try {
-            resultMsg = sysMenuService.updateById(sysMenuEntity);
-        } catch (Exception e) {
-            log.error("updateById Method Exception", e);
-        }
-        return resultMsg;
+        return sysMenuService.updateById(sysMenuEntity);
     }
 
     @LogAnnotation(value = "查询菜单")
     @PostMapping("/find")
     public ResponseResult findById(String id) {
-        ResponseResult resultMsg = null;
-        try {
-            resultMsg = sysMenuService.findById(id);
-        } catch (Exception e) {
-            log.error("findById Method Exception", e);
-        }
-        return resultMsg;
+        return sysMenuService.findById(id);
     }
 }

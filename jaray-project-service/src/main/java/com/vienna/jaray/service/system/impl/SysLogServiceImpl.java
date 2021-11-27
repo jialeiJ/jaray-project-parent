@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Jaray
@@ -25,10 +26,15 @@ public class SysLogServiceImpl implements SysLogService {
     @Override
     public ResponseResult findAll(CommonParamsModel commonParamsModel) {
         //设置分页信息(第几页，每页数量)
-        PageHelper.startPage(commonParamsModel.getPageNum(), commonParamsModel.getPageSize());
-        List<SysLog> sysLogList = sysLogMapper.findAll(commonParamsModel);
+        // PageHelper.startPage(1, commonParamsModel.getPageSize());
+        PageHelper.offsetPage((commonParamsModel.getPageNum()-1) * commonParamsModel.getPageSize(), commonParamsModel.getPageSize());
+        List<SysLog> logIdList = sysLogMapper.findIdsByPage(commonParamsModel);
+        List<String> idList = logIdList.stream().map(SysLog::getId).collect(Collectors.toList());
+
+        List<SysLog> sysLogList = sysLogMapper.findAllByPage(idList);
         //取记录总条数
-        PageInfo<?> pageInfo = new PageInfo<>(sysLogList);
+        PageInfo<SysLog> pageInfo = new PageInfo<>(logIdList);
+        pageInfo.setList(sysLogList);
         return ResponseResult.success().add("sysLogs", pageInfo);
     }
 

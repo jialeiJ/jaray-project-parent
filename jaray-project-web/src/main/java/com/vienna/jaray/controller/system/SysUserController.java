@@ -29,58 +29,32 @@ public class SysUserController {
     @LogAnnotation(value = "查询用户列表")
     @PostMapping("/find/all")
     public ResponseResult findAll(CommonParamsModel commonParamsModel) {
-        ResponseResult resultMsg = null;
-        try {
-            resultMsg = sysUserService.findAll(commonParamsModel);
-        } catch (Exception e) {
-            log.error("findAll Method Exception", e);
-        }
-        return resultMsg;
+        return sysUserService.findAll(commonParamsModel);
     }
 
     @LogAnnotation(value = "添加用户")
     @PostMapping("/add")
     public ResponseResult add(SysUser sysUserEntity) {
-        ResponseResult resultMsg = null;
-        resultMsg = sysUserService.add(sysUserEntity);
-        return resultMsg;
+        return sysUserService.add(sysUserEntity);
     }
 
     @LogAnnotation(value = "删除用户")
     @PostMapping("/deleteByIds")
     public ResponseResult deleteByIds(String ids) {
-        ResponseResult resultMsg = null;
-        try {
-            resultMsg = sysUserService.deleteByIds(ids.split(","));
-        } catch (Exception e) {
-            log.error("deleteByIds Method Exception", e);
-        }
-        return resultMsg;
+        return sysUserService.deleteByIds(ids.split(","));
     }
 
     @LogAnnotation(value = "更新用户")
     @PostMapping("/updateById")
     public ResponseResult updateById(SysUser sysUserEntity) {
-        ResponseResult resultMsg = null;
-        try {
-            resultMsg = sysUserService.updateById(sysUserEntity);
-        } catch (Exception e) {
-            log.error("updateById Method Exception", e);
-        }
-        return resultMsg;
+        return sysUserService.updateById(sysUserEntity);
     }
 
 
     @LogAnnotation(value = "查询用户")
     @PostMapping("/findById")
     public ResponseResult findById(String id) {
-        ResponseResult resultMsg = null;
-        try {
-            resultMsg = sysUserService.findById(id);
-        } catch (Exception e) {
-            log.error("findById Method Exception", e);
-        }
-        return resultMsg;
+        return sysUserService.findById(id);
     }
 
 
