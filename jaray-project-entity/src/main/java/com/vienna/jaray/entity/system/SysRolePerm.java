@@ -9,7 +9,7 @@ import lombok.Data;
  */
 @Data
 public class SysRolePerm {
-    private String id;
+    private Integer id;
     private String roleId;
     private String permId;
     private String createBy;

@@ -75,7 +75,7 @@
     <!-- 添加字典 -->
     <insert id="add">
     	insert into sys_log (`id`, `user_name`, `operation`, `method`, `params`, `return_result`, `time`, `ip`, `create_by`, `create_time`)
-    	values (findNextFormatSeqVal('U','s_sys_log_id'), #{entity.userName}, #{entity.operation}, #{entity.method},
+    	values (null, #{entity.userName}, #{entity.operation}, #{entity.method},
     	 #{entity.params}, #{entity.returnResult}, #{entity.time}, #{entity.ip}, #{entity.createBy}, #{entity.createTime})
     </insert>
 

@@ -21,7 +21,7 @@ public interface SysLogMapper {
      * @param commonParams 表格数据通用参数对象
      * @return 日志列表
      */
-    public List<SysLog> findAll(@Param("common")CommonParamsModel commonParams, @Param("pageNum") int pageNum, @Param("pageSize")int pageSize);
+    public List<SysLog> findAll(@Param("common")CommonParamsModel commonParams);
 
     /**
      * 查询日志列表
@@ -34,7 +34,7 @@ public interface SysLogMapper {
      * @param idList 表格数据通用参数对象
      * @return 日志列表
      */
-    public List<SysLog> findAllByPage(@Param("idList")List<String> idList);
+    public List<SysLog> findAllByPage(@Param("idList")List<Integer> idList);
 
     /**
      * 查询日志

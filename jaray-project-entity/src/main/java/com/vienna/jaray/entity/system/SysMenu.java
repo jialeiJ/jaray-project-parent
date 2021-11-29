@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Data
 public class SysMenu {
-	private String id;
+	private Integer id;
 	private String value;
 	private String name;
 	private String label;

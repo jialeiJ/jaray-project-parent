@@ -9,7 +9,7 @@ import lombok.Data;
  */
 @Data
 public class SysRoleMenu {
-    private String id;
+    private Integer id;
     private String roleId;
     private String menuId;
     private String createBy;

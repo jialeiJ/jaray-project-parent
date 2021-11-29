@@ -33,7 +33,7 @@
     <!-- 添加字典 -->
     <insert id="add">
     	insert into sys_dict (`id`, `value`, `label`, `type`, `description`, `sort`, `remarks`, `create_by`, `create_time`, `del_flag`)
-    	values (findNextFormatSeqVal('U','s_sys_dict_id'), #{entity.value}, #{entity.label}, #{entity.type},
+    	values (null, #{entity.value}, #{entity.label}, #{entity.type},
     	 #{entity.description}, #{entity.sort}, #{entity.remarks}, #{entity.createBy}, #{entity.createTime}, 0)
     </insert>
 

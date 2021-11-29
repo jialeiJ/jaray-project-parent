@@ -9,7 +9,7 @@ import lombok.Data;
  */
 @Data
 public class SysDict {
-    private String id;
+    private Integer id;
     private String value;
     private String label;
     private String type;

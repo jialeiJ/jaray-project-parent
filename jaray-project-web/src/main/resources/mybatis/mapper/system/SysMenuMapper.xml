@@ -71,7 +71,7 @@
     <!-- 添加菜单 -->
     <insert id="add">
         insert into sys_menu (`id`, `name`, `parent_id`, `url`, `type`, `icon`, `order_num`, `create_by`, `create_time`, `last_update_by`, `last_update_time`, `del_flag`)
-    	values (findNextFormatSeqVal('M','s_sys_menu_id'), #{entity.name}, #{entity.parentId}, #{entity.url}, #{entity.type}, #{entity.icon}, #{entity.orderNum},
+    	values (null, #{entity.name}, #{entity.parentId}, #{entity.url}, #{entity.type}, #{entity.icon}, #{entity.orderNum},
     	#{entity.createBy}, #{entity.createTime}, #{entity.lastUpdateBy}, #{entity.lastUpdateTime}, #{entity.delFlag})
     </insert>
 

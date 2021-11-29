@@ -38,7 +38,7 @@
     <!-- 添加用户 -->
     <insert id="add">
     	insert into sys_user (`id`, `name`, `password`, `email`, `mobile`, `status`, `dept_id`, `create_by`, `create_time`, `del_flag`)
-    	values (findNextFormatSeqVal('U','s_sys_user_id'), #{entity.name}, #{entity.password}, #{entity.email},
+    	values (null, #{entity.name}, #{entity.password}, #{entity.email},
     	 #{entity.mobile}, #{entity.status}, #{entity.deptId}, #{entity.createBy}, #{entity.createTime}, 0)
     </insert>
 

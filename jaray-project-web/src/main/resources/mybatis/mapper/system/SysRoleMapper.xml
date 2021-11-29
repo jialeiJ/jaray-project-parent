@@ -30,7 +30,7 @@
     <!-- 添加角色 -->
     <insert id="add">
     	insert into sys_role (`id`, `name`, `remark`, `create_by`, `create_time`, `last_update_by`, `last_update_time`, `del_flag`)
-    	values (findNextFormatSeqVal('U','s_sys_role_id'), #{entity.name}, #{entity.remark}, #{entity.createBy},
+    	values (null, #{entity.name}, #{entity.remark}, #{entity.createBy},
     	#{entity.createTime}, #{entity.createBy}, #{entity.createTime}, 0)
     </insert>
 

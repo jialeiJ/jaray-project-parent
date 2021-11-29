@@ -7,6 +7,7 @@ import com.vienna.jaray.entity.system.SysLog;
 import com.vienna.jaray.mapper.system.SysLogMapper;
 import com.vienna.jaray.model.system.CommonParamsModel;
 import com.vienna.jaray.service.system.SysLogService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
  * @date 2020年09月12日 13:58
  * @description: 系统日志服务实现类
  */
+@Slf4j
 @Service
 public class SysLogServiceImpl implements SysLogService {
     @Autowired
@@ -25,16 +27,18 @@ public class SysLogServiceImpl implements SysLogService {
 
     @Override
     public ResponseResult findAll(CommonParamsModel commonParamsModel) {
+        long start = System.currentTimeMillis();
         //设置分页信息(第几页，每页数量)
-        // PageHelper.startPage(1, commonParamsModel.getPageSize());
         PageHelper.offsetPage((commonParamsModel.getPageNum()-1) * commonParamsModel.getPageSize(), commonParamsModel.getPageSize());
         List<SysLog> logIdList = sysLogMapper.findIdsByPage(commonParamsModel);
-        List<String> idList = logIdList.stream().map(SysLog::getId).collect(Collectors.toList());
+        List<Integer> idList = logIdList.stream().map(SysLog::getId).collect(Collectors.toList());
 
         List<SysLog> sysLogList = sysLogMapper.findAllByPage(idList);
-        //取记录总条数
+        // 取记录总条数
         PageInfo<SysLog> pageInfo = new PageInfo<>(logIdList);
         pageInfo.setList(sysLogList);
+        long end = System.currentTimeMillis();
+        log.info("耗时：{}", end - start);
         return ResponseResult.success().add("sysLogs", pageInfo);
     }
 

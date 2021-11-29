@@ -27,7 +27,7 @@
     <!-- 添加用户角色 -->
     <insert id="add">
     	insert into sys_user_role (`id`, `user_id`, `role_id`, `create_by`, `create_time`, `last_update_by`, `last_update_time`)
-    	values (findNextFormatSeqVal('R','s_sys_user_role_id'), #{entity.userId}, #{entity.roleId}, #{entity.createBy},
+    	values (null, #{entity.userId}, #{entity.roleId}, #{entity.createBy},
     	 #{entity.createTime}, #{entity.lastUpdateBy}, #{entity.lastUpdateTime})
     </insert>
 

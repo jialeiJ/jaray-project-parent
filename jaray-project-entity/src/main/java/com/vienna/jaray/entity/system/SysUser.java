@@ -9,7 +9,7 @@ import lombok.Data;
  */
 @Data
 public class SysUser {
-    private String id;
+    private Integer id;
     private String name;
     private String password;
     private String menuPerm;

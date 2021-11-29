@@ -44,7 +44,7 @@
     <!-- 添加部门 -->
     <insert id="add">
     	insert into sys_dept (`id`, `name`, `parent_id`, `order_num`, `create_by`, `create_time`, `last_update_by`, `last_update_time`, `del_flag`)
-    	values (findNextFormatSeqVal('U','s_sys_dept_id'), #{entity.name}, #{entity.parentId}, #{entity.orderNum}, #{entity.createBy},
+    	values (null, #{entity.name}, #{entity.parentId}, #{entity.orderNum}, #{entity.createBy},
     	#{entity.createTime}, #{entity.createBy}, #{entity.createTime}, 0)
     </insert>
 

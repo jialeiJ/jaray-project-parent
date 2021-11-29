@@ -9,7 +9,7 @@ import lombok.Data;
  */
 @Data
 public class SysLog {
-    private String id;
+    private Integer id;
     private String userName;
     private String operation;
     private String method;
