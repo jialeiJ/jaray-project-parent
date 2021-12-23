@@ -8,3 +8,8 @@ export const modifyLeftMenus = (state, leftMenus) => {
   // 把方法传递过来的参数，赋值给state中的leftMenus
   state.leftMenus = leftMenus
 }
+
+export const modifyPermissions = (state, permissions) => {
+  // 把方法传递过来的参数，赋值给state中的permissions
+  state.permissions = permissions
+}

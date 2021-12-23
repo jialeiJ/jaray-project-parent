@@ -19,7 +19,7 @@
         <result property="lastUpdateTime" column="last_update_time"/>
         <result property="delFlag" column="del_flag"/>
     </resultMap>
-	
+
 	<sql id="Base_Column_List" >
 		u.id,u.name,u.password,u.menu_perm,u.email,u.mobile,u.status,u.dept_id,u.role_id,
         u.create_by,u.create_time,u.last_update_by,u.last_update_time,u.del_flag

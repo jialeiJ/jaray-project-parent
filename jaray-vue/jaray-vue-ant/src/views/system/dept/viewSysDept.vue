@@ -98,6 +98,8 @@ export default {
       // 调用接口
       API.viewSysDept(params).then(function(result) {
         if (result.code === 200) {
+          result.map.sysDept.createTime = that.$moment(result.map.sysDept.createTime)
+          result.map.sysDept.lastUpdateTime = that.$moment(result.map.sysDept.lastUpdateTime)
           that.viewForm = result.map.sysDept
 
           // 获取部门id的父id

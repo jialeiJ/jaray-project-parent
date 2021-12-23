@@ -17,7 +17,7 @@ public class SysMenu {
 	private String name;
 	private String label;
 	private String title;
-	private String parentId;
+	private Integer parentId;
 	private String url;
 	private String path;
 	private String perm;

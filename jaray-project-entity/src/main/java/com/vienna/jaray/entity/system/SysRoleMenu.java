@@ -10,8 +10,8 @@ import lombok.Data;
 @Data
 public class SysRoleMenu {
     private Integer id;
-    private String roleId;
-    private String menuId;
+    private Integer roleId;
+    private Integer menuId;
     private String createBy;
     private String createTime;
     private String lastUpdateBy;

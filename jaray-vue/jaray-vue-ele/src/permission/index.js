@@ -1,22 +1,5 @@
 import store from '@/store'
 
-const permissions = []
-
-function getAllPermission(leftMenus) {
-  for (let i = 0; i < leftMenus.length; i++) {
-    if (leftMenus[i].type === 1 && leftMenus[i].perms && leftMenus[i].perms.length) {
-      for (let j = 0; j < leftMenus[i].perms.length; j++) {
-        if (permissions.indexOf(leftMenus[i].perms[j].perm) < 0) {
-          permissions.push(leftMenus[i].perms[j].perm)
-        }
-      }
-    } else if (leftMenus[i].children && leftMenus[i].children.length) {
-      getAllPermission(leftMenus[i].children)
-    }
-  }
-  return permissions
-}
-
 /**
  * 判断用户是否拥有操作权限
  * 根据传入的权限标识，查看是否存在用户权限标识集合
@@ -24,10 +7,9 @@ function getAllPermission(leftMenus) {
  */
 function hasPermission(perm) {
   let hasPermissionFlag = false
-  const leftMenus = store.getters.leftMenus
-  const permissions = getAllPermission(leftMenus)
+  const permissions = store.getters.permissions
   for (let i = 0; i < permissions.length; i++) {
-    if (permissions[i] === perm) {
+    if (permissions[i].perm === perm) {
       hasPermissionFlag = true
       break
     }

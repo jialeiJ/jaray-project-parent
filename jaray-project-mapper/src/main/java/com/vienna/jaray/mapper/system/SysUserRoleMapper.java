@@ -33,7 +33,7 @@ public interface SysUserRoleMapper {
      * @param userId 用户id
      * @return 用户角色
      */
-    public SysUserRole findByUserId(@Param("userId")String userId);
+    public List<SysUserRole> findByUserId(@Param("userId")Integer userId);
 
     /**
      * 删除用户角色

@@ -9,3 +9,7 @@ export function modifyLeftMenus({ commit }, leftMenus) {
   return commit('modifyLeftMenus', leftMenus)
 }
 
+// commit 提交；leftMenus即为传递过来的参数
+export function modifyPermissions({ commit }, permissions) {
+  return commit('modifyPermissions', permissions)
+}

@@ -87,7 +87,7 @@ public class SystemServiceImpl implements SystemService {
     }
 
     @Override
-    public ResponseResult updatePassword(String id, String password) {
+    public ResponseResult updatePassword(Integer id, String password) {
         ResponseResult responseResult = ResponseResult.fail();
         SysUser sysUser = new SysUser();
         sysUser.setId(id);

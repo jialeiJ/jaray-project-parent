@@ -10,8 +10,8 @@ import lombok.Data;
 @Data
 public class SysRolePerm {
     private Integer id;
-    private String roleId;
-    private String permId;
+    private Integer roleId;
+    private Integer permId;
     private String createBy;
     private String createTime;
     private String lastUpdateBy;

@@ -13,6 +13,7 @@ import moment from 'moment'
 // moment.locale('zh-cn') // 汉化
 import 'default-passive-events'
 import '@utils/jquery.fileDownload'
+import * as echarts from 'echarts'
 import hasPermissionFun from './permission/index'
 
 import '@/assets/iconfont/iconfont.css'
@@ -24,6 +25,7 @@ Vue.use(Fragment.Plugin)
 Vue.use(hasPermissionFun)
 
 Vue.prototype.axios = axios
+Vue.prototype.$echarts = echarts
 
 /**
  * 全局挂载（适用于script标签中的js代码格式化时间）

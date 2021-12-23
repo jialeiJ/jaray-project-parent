@@ -26,14 +26,14 @@ public interface SysRoleMenuMapper {
      * @param roleId 角色id
      * @return 角色菜单
      */
-    public SysRoleMenu findByRid(@Param("roleId")String roleId);
+    public List<SysRoleMenu> findByRid(@Param("roleId")String roleId);
 
     /**
      * 查询角色菜单
      * @param roleIds 角色id数组
      * @return
      */
-    public List<SysRoleMenu> findByRids(@Param("roleIds")String[] roleIds);
+    public List<SysRoleMenu> findByRids(@Param("roleIds")List<Integer> roleIds);
 
     /**
      * 添加角色菜单
@@ -41,6 +41,13 @@ public interface SysRoleMenuMapper {
      * @return 添加结果
      */
     public int add(@Param("entity") SysRoleMenu sysRoleMenu);
+
+    /**
+     * 批量添加角色菜单
+     * @param roleMenuList 角色菜单集合
+     * @return
+     */
+    public int batchAdd(@Param("roleMenuList") List<SysRoleMenu> roleMenuList);
 
     /**
      * 删除角色菜单
@@ -55,4 +62,10 @@ public interface SysRoleMenuMapper {
      * @return 更新结果
      */
     public int updateByRid(@Param("entity") SysRoleMenu sysRoleMenu);
+
+    /**
+     * 删除角色菜单
+     * @param roleId 角色id
+     */
+    public int deleteByRid(@Param("roleId")Integer roleId);
 }

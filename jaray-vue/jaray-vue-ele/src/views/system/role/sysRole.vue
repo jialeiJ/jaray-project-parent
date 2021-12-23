@@ -56,7 +56,6 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
 import API from '@api/api_sys_role'
 import SYS_API from '@api/api_system'
 import ROLE_MENU_PERM_API from '@api/api_sys_role_menu_perm'
@@ -124,15 +123,14 @@ export default {
       treeData: [],
       menuPerm: {
         roleId: '',
-        menuPermId: '',
-        menuId: '',
-        permId: '',
+        menuPermId: [],
+        menuId: [],
+        permId: [],
         keys: []
       }
     }
   },
   computed: {
-    ...mapGetters(['leftMenus']), // 动态计算属性，相当于this.$store.getters.collapsed
     leftMenus: {
       get() {
         return this.$store.state.leftMenus
@@ -183,26 +181,26 @@ export default {
       ROLE_MENU_PERM_API.viewSysRoleMenuPermByRid(params).then(function(result) {
         if (result.code === 200) {
           const menuPermId = []
-          if (result.map.sysRoleMenu) {
-            that.menuPerm.menuId = result.map.sysRoleMenu.menuId
-            menuPermId.push(result.map.sysRoleMenu.menuId)
+          if (result.map.sysMenuIdList) {
+            that.menuPerm.menuId = result.map.sysMenuIdList
+            menuPermId.push(result.map.sysMenuIdList)
           }
-          if (result.map.sysRolePerm) {
-            that.menuPerm.permId = result.map.sysRolePerm.permId
-            menuPermId.push(result.map.sysRolePerm.permId)
+          if (result.map.sysPermPidList) {
+            that.menuPerm.permId = result.map.sysPermPidList
+            menuPermId.push(result.map.sysPermPidList)
           }
 
           if (menuPermId && menuPermId.length) {
-            that.menuPerm.menuPermId = menuPermId.join(',')
+            that.menuPerm.menuPermId = menuPermId
           } else {
-            that.menuPerm.menuPermId = ''
-            that.menuPerm.permId = ''
-            that.menuPerm.menuId = ''
+            that.menuPerm.menuPermId = []
+            that.menuPerm.permId = []
+            that.menuPerm.menuId = []
           }
         } else {
-          that.menuPerm.menuPermId = ''
-          that.menuPerm.permId = ''
-          that.menuPerm.menuId = ''
+          that.menuPerm.menuPermId = []
+          that.menuPerm.permId = []
+          that.menuPerm.menuId = []
         }
         that.resetTreeChecked()
         if (row.name === 'admin') {
@@ -226,8 +224,8 @@ export default {
     },
     resetTreeChecked: function(row) {
       const that = this
-      const permKeys = that.menuPerm.permId.split(',')
-      const menuKeys = that.menuPerm.menuId.split(',')
+      const permKeys = that.menuPerm.permId
+      const menuKeys = that.menuPerm.menuId
 
       for (var i = 0; i < menuKeys.length; i++) {
         for (var j = 0; j < permKeys.length; j++) {
@@ -237,8 +235,7 @@ export default {
         }
       }
 
-      const keys = menuKeys.concat(permKeys)
-      that.$refs.iTree.resetChecked(keys)
+      that.$refs.iTree.resetChecked(permKeys)
     },
     clearTreeChecked: function() {
       const that = this
@@ -367,10 +364,7 @@ export default {
           that.leftMenus = result.map.leftMenu
         }
       })
-    },
-    ...mapActions( // 语法糖
-      ['modifyLeftMenus'] // 相当于this.$store.dispatch('modifyLeftMenus'),提交这个方法
-    )
+    }
   }
 }
 </script>

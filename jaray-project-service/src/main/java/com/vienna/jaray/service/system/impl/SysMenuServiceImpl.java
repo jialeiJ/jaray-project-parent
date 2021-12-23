@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -31,6 +32,8 @@ public class SysMenuServiceImpl implements SysMenuService {
     private SysUserMapper sysUserMapper;
     @Autowired
     private SysRoleMapper sysRoleMapper;
+    @Autowired
+    private SysUserRoleMapper sysUserRoleMapper;
     @Autowired
     private SysRoleMenuMapper sysRoleMenuMapper;
     @Autowired
@@ -48,55 +51,29 @@ public class SysMenuServiceImpl implements SysMenuService {
         // 查询用户信息
         SysUser sysUser = sysUserMapper.findById(userId);
         if(StringUtils.isNotEmpty(userId) && !StringUtils.equalsIgnoreCase("admin", sysUser.getName())){
-
-            String[] roleIdArr = null;
             // 获取用户角色id并转为数组
-            String roleIds = sysUser.getRoleId();
-            roleIdArr = roleIds.split(Separator.COMMA_SEPARATOR_EN.getSeparator());
+            List<SysUserRole> sysUserRoleList = sysUserRoleMapper.findByUserId(sysUser.getId());
+            List<Integer> roleIdList = sysUserRoleList.stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
 
             // 查询角色菜单
-            List<SysRoleMenu> sysRoleMenuList =  sysRoleMenuMapper.findByRids(roleIdArr);
-            StringBuilder menuStringBuilder = new StringBuilder();
+            List<SysRoleMenu> sysRoleMenuList =  sysRoleMenuMapper.findByRids(roleIdList);
+
             // 遍历角色菜单集合获取菜单权限
-            for(int i=0;i<sysRoleMenuList.size();i++){
-                if(i == (sysRoleMenuList.size()-1)){
-                    menuStringBuilder.append(sysRoleMenuList.get(i).getMenuId());
-                }else{
-                    menuStringBuilder.append(sysRoleMenuList.get(i).getMenuId()).append(Separator.COMMA_SEPARATOR_EN.getSeparator());
-                }
-            }
-            String menuPerm = menuStringBuilder.toString();
-            // 获取菜单权限数组
-            String[] menuPerms = {};
-            if(StringUtils.isNotEmpty(menuPerm)){
-                menuPerms = menuPerm.split(Separator.COMMA_SEPARATOR_EN.getSeparator());
-            }
+            List<Integer> menuIdList = sysRoleMenuList.stream().map(SysRoleMenu::getMenuId).collect(Collectors.toList());
 
             if (!StringUtils.equalsIgnoreCase("admin", sysUser.getName())) {
                 // 获取无权限的菜单
-                noMenuList = sysMenuMapper.findNoPermByIds(menuPerms);
+                noMenuList = sysMenuMapper.findNoPermByIds(menuIdList);
             }
-
 
             // 查询角色权限
-            List<SysRolePerm> sysRolePermList = sysRolePermMapper.findByRids(roleIdArr);
-            StringBuilder permStringBuilder = new StringBuilder();
-            // 遍历角色菜单集合获取菜单权限
-            for(int i=0;i<sysRolePermList.size();i++){
-                if(i == (sysRolePermList.size()-1)){
-                    permStringBuilder.append(sysRolePermList.get(i).getPermId());
-                }else{
-                    permStringBuilder.append(sysRolePermList.get(i).getPermId()).append(Separator.COMMA_SEPARATOR_EN.getSeparator());
-                }
-            }
-            String rolePerm = permStringBuilder.toString();
-            // 获取角色权限数组
-            String[] rolePerms = {};
-            if(StringUtils.isNotEmpty(rolePerm)){
-                rolePerms = rolePerm.split(Separator.COMMA_SEPARATOR_EN.getSeparator());
-            }
+            List<SysMenu> sysMenuList = sysMenuMapper.findByIds(menuIdList);
+
+            // 4、获取所有权限
+            List<Integer> permIdList = sysMenuList.stream().filter(sysMenu -> sysMenu.getType() == SysMenuConfig.BTN_FLAG).map(SysMenu::getId).collect(Collectors.toList());
+
             // 获取角色权限的菜单
-            permList = sysMenuMapper.findPermByIds(rolePerms);
+            permList = sysMenuMapper.findPermByIds(permIdList);
         }else{
             permList = sysMenuMapper.findBtnAll();
         }

@@ -12,7 +12,9 @@ function initState() {
     // 左侧菜单是否折叠标志
     collapsed: false,
     // 左侧菜单数据集合
-    leftMenus: []
+    leftMenus: [],
+    // 用户权限集合
+    permissions: []
   }
 }
 // 首先声明一个需要全局维护的状态state，比如这里举例的collapsed

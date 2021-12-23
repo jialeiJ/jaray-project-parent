@@ -52,8 +52,6 @@
 </template>
 
 <script>
-import store from '@/store'
-import { mapActions, mapGetters } from 'vuex'
 import API from '../../api/api_system'
 import LeftNav from '@/components/nav/LeftNav'
 
@@ -77,6 +75,12 @@ export default {
       type: Boolean,
       default: function() {
         return true
+      }
+    },
+    leftMenus: {
+      type: Array,
+      default: function() {
+        return []
       }
     }
   },
@@ -125,22 +129,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['collapsed']), // 动态计算属性，相当于this.$store.getters.collapsed
     collapsed: {
       get() {
         return this.$store.state.collapsed
       },
       set(val) {
         this.$store.state.collapsed = val
-      }
-    },
-    ...mapGetters(['leftMenus']), // 动态计算属性，相当于this.$store.getters.leftMenus
-    leftMenus: {
-      get() {
-        return this.$store.state.leftMenus
-      },
-      set(val) {
-        this.$store.state.leftMenus = val
       }
     }
   },
@@ -158,11 +152,12 @@ export default {
     }
   },
   created: function() {
+    const that = this
+    that.setUserInfo()
+    // that.findLeftNav()
   },
   mounted: function() {
     const that = this
-    that.setUserInfo()
-    that.findLeftNav()
 
     window.onresize = () => {
       return (() => {
@@ -179,19 +174,6 @@ export default {
     }
   },
   methods: {
-    findLeftNav: function() {
-      const that = this
-      // 定义请求参数
-      const params = {}
-      // 调用接口
-      API.findLeftNav(params).then(function(result) {
-        if (result.code === 200) {
-          that.leftMenus = result.map.leftMenu
-          // 防止菜单权限未刷新，导致没权限按钮存在
-          sessionStorage.setItem('state', JSON.stringify(store.state))
-        }
-      })
-    },
     // 折叠导航栏
     changeCollapse: function() {
       this.collapsed = !this.collapsed
@@ -234,8 +216,8 @@ export default {
       const that = this
       sessionStorage.clear()
       that.$router.push({ path: '/' })
-      // that.$store.dispatch('modifyLeftMenus', [])
-      console.log(that.$store.getters.leftMenus)
+      that.$store.dispatch('modifyLeftMenus', [])
+      console.log(that.$store.getters.permissions)
     },
     handleOpen: function(key, keyPath) {
       console.log(key, keyPath)
@@ -274,13 +256,7 @@ export default {
           that.tileLeftNav(item.children)
         }
       })
-    },
-    ...mapActions( // 语法糖
-      ['modifyCollapsed'] // 相当于this.$store.dispatch('modifyCollapsed'),提交这个方法
-    ),
-    ...mapActions( // 语法糖
-      ['modifyLeftMenus'] // 相当于this.$store.dispatch('modifyLeftMenus'),提交这个方法
-    )
+    }
   }
 }
 </script>

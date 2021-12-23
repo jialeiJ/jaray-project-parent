@@ -2,6 +2,8 @@ package com.vienna.jaray.entity.system;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author Jaray
  * @date 2020年09月10日 22:29
@@ -23,4 +25,6 @@ public class SysUser {
     private String lastUpdateBy;
     private String lastUpdateTime;
     private int delFlag;
+
+    private List<SysRole> roles;
 }

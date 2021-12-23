@@ -93,11 +93,11 @@ export default {
       const keys = []
       that.tileTreeData.forEach(function(item, index) {
         const i = keys.indexOf(item.parentId)
-        if (i === -1) {
+        if (i === -1 && item.parent_id) {
           keys.push(item.parent_id)
         }
         const j = keys.indexOf(item.id)
-        if (j === -1) {
+        if (j === -1 && item.id) {
           keys.push(item.id)
         }
       })

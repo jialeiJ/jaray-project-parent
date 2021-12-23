@@ -44,5 +44,5 @@ public interface SysRoleMenuPermService {
      * @param menuPermId 菜单权限id
      * @return 更新结果
      */
-    ResponseResult updateByRid(String roleId, String menuPermId);
+    ResponseResult updateByRid(Integer roleId, String menuPermId);
 }

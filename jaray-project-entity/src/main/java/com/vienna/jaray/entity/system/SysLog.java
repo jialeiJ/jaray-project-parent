@@ -12,6 +12,7 @@ public class SysLog {
     private Integer id;
     private String userName;
     private String operation;
+    private String url;
     private String method;
     private String params;
     private String returnResult;

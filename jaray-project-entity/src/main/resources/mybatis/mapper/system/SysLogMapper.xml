@@ -7,6 +7,7 @@
         <id property="id" column="id"/>
         <result property="userName" column="user_name"/>
         <result property="operation" column="operation"/>
+        <result property="url" column="url"/>
         <result property="method" column="method"/>
         <result property="params" column="params"/>
         <result property="returnResult" column="return_result"/>
@@ -19,7 +20,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-		l.id,l.user_name,l.operation,l.method,l.params,l.time,l.ip,
+		l.id,l.user_name,l.operation,l.url,l.method,l.params,l.time,l.ip,
         l.create_by,l.create_time,l.last_update_by,l.last_update_time
     </sql>
 
@@ -53,7 +54,7 @@
             </foreach> t
         left join sys_log l on t.id = l.id
         <where>
-            l.id > 'U'
+            l.id > -1
         </where>
     </select>
 
@@ -74,8 +75,8 @@
 
     <!-- 添加字典 -->
     <insert id="add">
-    	insert into sys_log (`id`, `user_name`, `operation`, `method`, `params`, `return_result`, `time`, `ip`, `create_by`, `create_time`)
-    	values (null, #{entity.userName}, #{entity.operation}, #{entity.method},
+    	insert into sys_log (`id`, `user_name`, `operation`, `url`, `method`, `params`, `return_result`, `time`, `ip`, `create_by`, `create_time`)
+    	values (null, #{entity.userName}, #{entity.operation}, #{entity.url}, #{entity.method},
     	 #{entity.params}, #{entity.returnResult}, #{entity.time}, #{entity.ip}, #{entity.createBy}, #{entity.createTime})
     </insert>
 
@@ -108,6 +109,7 @@
         <trim prefix="set" suffixOverrides=",">
             <if test="entity.user_name != null">`user_name` = #{entity.userName},</if>
             <if test="entity.operation != null">`operation` = #{entity.operation},</if>
+            <if test="entity.url != null">`url` = #{entity.url},</if>
             <if test="entity.method != null">`method` = #{entity.method},</if>
             <if test="entity.params != null">`params` = #{entity.params},</if>
             <if test="entity.returnResult != null">`return_result` = #{entity.returnResult},</if>

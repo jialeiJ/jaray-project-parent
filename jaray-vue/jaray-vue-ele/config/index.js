@@ -6,16 +6,15 @@ const path = require('path')
 
 module.exports = {
   dev: {
-
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://127.0.0.1:8090',  //目标接口域名
-        changeOrigin: true,  //是否跨域
+        target: 'http://127.0.0.1:8090', // 目标接口域名
+        changeOrigin: true, // 是否跨域
         pathRewrite: {
-          '^/api': '/'   //重写接口
+          '^/api': '/' // 重写接口
         }
       }
     },
@@ -28,7 +27,6 @@ module.exports = {
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
-    
     /**
      * Source Maps
      */
@@ -58,7 +56,6 @@ module.exports = {
      * assetsRoot: path.resolve(__dirname, '../xx'),
      * assetsPublicPath: 'xx',
      */
-
 
     /**
      * Source Maps

@@ -5,7 +5,7 @@
         v-if="navMenu.type == 0 && navMenu.children && navMenu.children.length >= 1"
         :key="index"
         :data="navMenu"
-        :index="(navMenu.url == null || navMenu.url =='')?navMenu.id:navMenu.url">
+        :index="(navMenu.url == null || navMenu.url =='')?(navMenu.id+''):navMenu.url">
         <template slot="title">
           <i v-if="icon" :class="navMenu.icon"/>
           <span slot="title"> {{ navMenu.name }}</span>
@@ -17,7 +17,7 @@
         v-else
         :key="index"
         :data="navMenu"
-        :index="(navMenu.url == null || navMenu.url =='')?navMenu.id:navMenu.url"
+        :index="(navMenu.url == null || navMenu.url =='')?(navMenu.id+''):navMenu.url"
         :route="navMenu.url">
         <i :class="navMenu.icon"/>
         <span slot="title">{{ navMenu.name }}</span>
@@ -27,7 +27,6 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'LeftNav',
@@ -51,12 +50,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['collapsed']) // 动态计算属性，相当于this.$store.getters.name
   },
   methods: {
-    ...mapActions( // 语法糖
-      ['modifyCollapsed'] // 相当于this.$store.dispatch('modifyCollapsed'),提交这个方法
-    ),
     handleOpen: function(key, keyPath) {
       console.log(key, keyPath)
     },

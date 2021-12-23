@@ -28,8 +28,8 @@ public class SysLogServiceImpl implements SysLogService {
     @Override
     public ResponseResult findAll(CommonParamsModel commonParamsModel) {
         long start = System.currentTimeMillis();
-        //设置分页信息(第几页，每页数量)
-        PageHelper.offsetPage((commonParamsModel.getPageNum()-1) * commonParamsModel.getPageSize(), commonParamsModel.getPageSize());
+        //设置分页信息(偏移量，每页数量)
+        PageHelper.offsetPage(commonParamsModel.getOffset(), commonParamsModel.getPageSize());
         List<SysLog> logIdList = sysLogMapper.findIdsByPage(commonParamsModel);
         List<Integer> idList = logIdList.stream().map(SysLog::getId).collect(Collectors.toList());
 

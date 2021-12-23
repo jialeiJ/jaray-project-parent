@@ -34,8 +34,9 @@ public class SysRolePermServiceImpl implements SysRolePermService {
 
     @Override
     public ResponseResult findByRid(String roleId) {
-        SysRolePerm sysRolePerm = sysRolePermMapper.findByRid(roleId);
-        return ResponseResult.success().add("sysRolePerm", sysRolePerm);
+//        SysRolePerm sysRolePerm = sysRolePermMapper.findByRid(roleId);
+//        return ResponseResult.success().add("sysRolePerm", sysRolePerm);
+        return ResponseResult.success();
     }
 
     @Override

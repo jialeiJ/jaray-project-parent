@@ -29,12 +29,11 @@
 <script>
 import Env from '@api/env'
 import API from '@api/api_system'
-import HeadNav from '@/components/nav/HeadNav'
 import iTabs from '@/components/common/iTabs'
 
 export default {
   name: 'Login',
-  components: { HeadNav, iTabs },
+  components: { iTabs },
   data() {
     return {
       checkCodeSrc: Env.baseURL + '/system/captcha.jpg',

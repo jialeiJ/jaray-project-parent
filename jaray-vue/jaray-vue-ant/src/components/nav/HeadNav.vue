@@ -130,7 +130,6 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['collapsed']), // 动态计算属性，相当于this.$store.getters.collapsed
     collapsed: {
       get() {
         return this.$store.state.collapsed
@@ -139,7 +138,6 @@ export default {
         this.$store.state.collapsed = val
       }
     },
-    ...mapGetters(['leftMenus']), // 动态计算属性，相当于this.$store.getters.leftMenus
     leftMenus: {
       get() {
         return this.$store.state.leftMenus

@@ -23,7 +23,6 @@
 
 <script>
 import store from '@/store'
-import { mapActions, mapGetters } from 'vuex'
 import API from '../../api/api_system'
 
 import { Menu } from 'ant-design-vue'
@@ -64,7 +63,6 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['collapsed']), // 动态计算属性，相当于this.$store.getters.collapsed
     collapsed: {
       get() {
         return this.$store.state.collapsed
@@ -73,13 +71,20 @@ export default {
         this.$store.state.collapsed = val
       }
     },
-    ...mapGetters(['leftMenus']), // 动态计算属性，相当于this.$store.getters.leftMenus
     leftMenus: {
       get() {
         return this.$store.state.leftMenus
       },
       set(val) {
         this.$store.state.leftMenus = val
+      }
+    },
+    permissions: {
+      get() {
+        return this.$store.state.permissions
+      },
+      set(val) {
+        this.$store.state.permissions = val
       }
     }
   },
@@ -103,6 +108,17 @@ export default {
 
   },
   methods: {
+    getAllPermission: function(leftMenus) {
+      const that = this
+      for (let i = 0; i < leftMenus.length; i++) {
+        if (leftMenus[i].type === 1 && leftMenus[i].perms && leftMenus[i].perms.length) {
+          that.permissions = that.permissions.concat(leftMenus[i].perms)
+        } else if (leftMenus[i].type === 0 && leftMenus[i].children && leftMenus[i].children.length) {
+          that.getAllPermission(leftMenus[i].children)
+        }
+      }
+      store.dispatch('modifyPermissions', that.permissions)
+    },
     findLeftNav: function() {
       const that = this
       // 定义请求参数
@@ -113,6 +129,8 @@ export default {
       API.findLeftNav(params).then(function(result) {
         if (result.code === 200) {
           that.leftMenus = result.map.leftMenu
+          that.permissions = []
+          that.getAllPermission(that.leftMenus)
           // 防止菜单权限未刷新，导致没权限按钮存在
           sessionStorage.setItem('state', JSON.stringify(store.state))
         }
@@ -146,13 +164,7 @@ export default {
           that.tileLeftNav(item.children)
         }
       })
-    },
-    ...mapActions( // 语法糖
-      ['modifyCollapsed'] // 相当于this.$store.dispatch('modifyCollapsed'),提交这个方法
-    ),
-    ...mapActions( // 语法糖
-      ['modifyLeftMenus'] // 相当于this.$store.dispatch('modifyLeftMenus'),提交这个方法
-    )
+    }
   }
 }
 </script>

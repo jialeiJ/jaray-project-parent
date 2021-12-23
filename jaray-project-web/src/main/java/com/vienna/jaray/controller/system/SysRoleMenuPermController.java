@@ -43,7 +43,7 @@ public class SysRoleMenuPermController {
 
     @LogAnnotation(value = "更新角色菜单权限")
     @PostMapping("/update")
-    public ResponseResult updateByRid(String roleId, String menuPermId) {
+    public ResponseResult updateByRid(Integer roleId, String menuPermId) {
         return sysRoleMenuPermService.updateByRid(roleId, menuPermId);
     }
 

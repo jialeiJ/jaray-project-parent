@@ -79,19 +79,19 @@ public interface SysMenuMapper {
 	 * @param ids 菜单id数组
 	 * @return
 	 */
-	public List<SysMenu> findByIds(@Param("ids")String[] ids);
+	public List<SysMenu> findByIds(@Param("ids")List<Integer> ids);
 
 	/**
 	 * 查询无权限菜单
-	 * @param menuPerms 用户菜单权限
+	 * @param menuIds 菜单id集合
 	 * @return
 	 */
-	public List<SysMenu> findNoPermByIds(@Param("menuPerms")String[] menuPerms);
+	public List<SysMenu> findNoPermByIds(@Param("menuPerms")List<Integer> menuIds);
 
 	/**
 	 * 查询菜单权限
 	 * @param menuPerms 用户菜单权限
 	 * @return
 	 */
-	public List<SysMenu> findPermByIds(@Param("menuPerms")String[] menuPerms);
+	public List<SysMenu> findPermByIds(@Param("menuPerms")List<Integer> menuPerms);
 }

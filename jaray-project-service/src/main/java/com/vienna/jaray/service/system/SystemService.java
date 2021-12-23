@@ -37,5 +37,5 @@ public interface SystemService {
      * @param password 密码
      * @return
      */
-    public ResponseResult updatePassword(String id, String password);
+    public ResponseResult updatePassword(Integer id, String password);
 }

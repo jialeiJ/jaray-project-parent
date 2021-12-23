@@ -42,8 +42,10 @@
           </template>
           <template v-else-if="item.operation">
             <template v-for="(it, index) in item.operation">
-              <a :key="itemIndex+index" @click.stop="it.clickFun(record)">{{ it.name }}</a>
-              <a-divider v-if="index !== (item.operation.length-1)" :key="index" type="vertical" />
+              <span v-if="it.disabled" :key="index">
+                <a :key="itemIndex+index" @click.stop="it.clickFun(record)">{{ it.name }}</a>
+                <a-divider v-if="index !== (item.operation.length - (item.operation.filter((item) => {return item.disabled == false}).length + 1))" :key="index" type="vertical" />
+              </span>
             </template>
           </template>
           <template v-else>

@@ -100,9 +100,9 @@ export default {
       treeData: [],
       menuPerm: {
         roleId: '',
-        menuPermId: '',
-        menuId: '',
-        permId: '',
+        menuPermId: [],
+        menuId: [],
+        permId: [],
         keys: []
       }
     }
@@ -159,26 +159,26 @@ export default {
       ROLE_MENU_PERM_API.viewSysRoleMenuPermByRid(params).then(function(result) {
         if (result.code === 200) {
           const menuPermId = []
-          if (result.map.sysRoleMenu) {
-            that.menuPerm.menuId = result.map.sysRoleMenu.menuId
-            menuPermId.push(result.map.sysRoleMenu.menuId)
+          if (result.map.sysMenuIdList) {
+            that.menuPerm.menuId = result.map.sysMenuIdList
+            menuPermId.push(result.map.sysMenuIdList)
           }
-          if (result.map.sysRolePerm) {
-            that.menuPerm.permId = result.map.sysRolePerm.permId
-            menuPermId.push(result.map.sysRolePerm.permId)
+          if (result.map.sysPermPidList) {
+            that.menuPerm.permId = result.map.sysPermPidList
+            menuPermId.push(result.map.sysPermPidList)
           }
 
           if (menuPermId && menuPermId.length) {
-            that.menuPerm.menuPermId = menuPermId.join(',')
+            that.menuPerm.menuPermId = menuPermId
           } else {
-            that.menuPerm.menuPermId = ''
-            that.menuPerm.permId = ''
-            that.menuPerm.menuId = ''
+            that.menuPerm.menuPermId = []
+            that.menuPerm.permId = []
+            that.menuPerm.menuId = []
           }
         } else {
-          that.menuPerm.menuPermId = ''
-          that.menuPerm.permId = ''
-          that.menuPerm.menuId = ''
+          that.menuPerm.menuPermId = []
+          that.menuPerm.permId = []
+          that.menuPerm.menuId = []
         }
         that.resetTreeChecked()
         if (row.name === 'admin') {
@@ -202,14 +202,8 @@ export default {
     },
     resetTreeChecked: function() {
       const that = this
-      let permKeys = []
-      if (that.menuPerm.permId !== '') {
-        permKeys = that.menuPerm.permId.split(',')
-      }
-      let menuKeys = []
-      if (that.menuPerm.menuId !== '') {
-        menuKeys = that.menuPerm.menuId.split(',')
-      }
+      const permKeys = that.menuPerm.permId
+      const menuKeys = that.menuPerm.menuId
 
       for (var i = 0; i < menuKeys.length; i++) {
         for (var j = 0; j < permKeys.length; j++) {
@@ -219,8 +213,12 @@ export default {
         }
       }
 
-      const keys = menuKeys.concat(permKeys)
-      that.$refs.iTree.resetChecked(keys)
+      // int数组转string数组
+      const currPermKeys = permKeys.map(String)
+      that.$refs.iTree.resetChecked(currPermKeys)
+
+      // const keys = menuKeys.concat(permKeys)
+      // that.$refs.iTree.resetChecked(keys)
     },
     clearTreeChecked: function() {
       const that = this

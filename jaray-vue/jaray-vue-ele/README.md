@@ -113,6 +113,13 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
     2、在main.js引入jquery
         import $ from jquery
 
+七、echarts
+    1、安装echarts
+        npm install echarts -S
+    2、在main.js引入echarts
+        import echarts from 'echarts'
+        Vue.prototype.$echarts = echarts
+
 七、配置代理，避免跨域
 
 八、打包集成SpringBoot

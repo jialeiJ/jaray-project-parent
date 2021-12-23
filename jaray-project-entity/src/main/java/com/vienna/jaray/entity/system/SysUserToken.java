@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class SysUserToken {
     private int id;
-    private String userId;
+    private Integer userId;
     private String name;
     private String token;
     private String expireTime;

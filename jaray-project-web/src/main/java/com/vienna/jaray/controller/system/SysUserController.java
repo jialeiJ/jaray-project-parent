@@ -6,11 +6,14 @@ import com.vienna.jaray.entity.system.SysUser;
 import com.vienna.jaray.model.system.CommonParamsModel;
 import com.vienna.jaray.service.system.SysUserService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -23,6 +26,9 @@ import java.util.HashMap;
 @RestController
 @RequestMapping("/sys/user")
 public class SysUserController {
+    // 项目根路径下的目录  -- SpringBoot static 目录相当于是根路径下（SpringBoot 默认）
+    public final static String UPLOAD_PATH_PREFIX = "static/uploadFile/";
+
     @Autowired
     private SysUserService sysUserService;
 
@@ -75,6 +81,18 @@ public class SysUserController {
 
         long fileSize = file.getSize();
         log.info("上传文件大小为：{}", fileSize);
+
+        File filePath = new File("src/main/resources/" + UPLOAD_PATH_PREFIX);
+        if (!filePath.exists()) {
+            filePath.mkdirs();
+        }
+
+        File dest = new File("src/main/resources/" + UPLOAD_PATH_PREFIX + fileName);
+        try {
+            file.transferTo(dest);
+        } catch (IOException e) {
+            log.info("文件保存异常：{}", e);
+        }
 
         return ResponseResult.success().add("fileName", fileName);
     }

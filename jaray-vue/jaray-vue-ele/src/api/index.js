@@ -5,8 +5,7 @@ import router from '../router/index'
 import API from '../api/api_system'
 // 注意：在js文件中使用element组件 按照下面更优雅哦~~
 import {
-  Message,
-  MessageBox
+  Message
 } from 'element-ui'
 
 let token = ''

@@ -62,7 +62,7 @@ public class SystemController {
     }
 
     @PostMapping("/updatePassword")
-    public ResponseResult updatePassword(String id, String password){
+    public ResponseResult updatePassword(Integer id, String password){
         return systemService.updatePassword(id, password);
     }
 

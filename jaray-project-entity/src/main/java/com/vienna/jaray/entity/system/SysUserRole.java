@@ -10,8 +10,8 @@ import lombok.Data;
 @Data
 public class SysUserRole {
     private Integer id;
-    private String userId;
-    private String roleId;
+    private Integer userId;
+    private Integer roleId;
     private String createBy;
     private String createTime;
     private String lastUpdateBy;

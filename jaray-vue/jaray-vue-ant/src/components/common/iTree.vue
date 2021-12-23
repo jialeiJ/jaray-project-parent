@@ -96,7 +96,8 @@ export default {
       })
 
       that.resetChecked(checkedKeys)
-      that.$emit('transmit_parent_keys', keys)
+      // that.$emit('transmit_parent_keys', keys)
+      that.$emit('transmit_parent_keys', allKeys)
     },
     onSelect(selectedKeys, info) {
       console.log('onSelect', info)
@@ -112,6 +113,10 @@ export default {
         }
       })
       that.checkedKeys = keys
+
+      // int数组转string数组
+      const currPermKeys = keys.map(String)
+      that.resetChecked(currPermKeys)
       // that.$refs.tree.setCheckedKeys(keys);
       that.$emit('transmit_parent_keys', keys)
     },

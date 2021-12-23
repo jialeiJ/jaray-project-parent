@@ -26,14 +26,14 @@ public interface SysRolePermMapper {
      * @param roleId 角色id
      * @return 角色权限
      */
-    public SysRolePerm findByRid(@Param("roleId")String roleId);
+    public List<SysRolePerm> findByRid(@Param("roleId")String roleId);
 
     /**
      * 查询角色权限
      * @param roleIds 角色id数组
      * @return 角色权限
      */
-    public List<SysRolePerm> findByRids(@Param("roleIds")String[] roleIds);
+    public List<SysRolePerm> findByRids(@Param("roleIds")List<Integer> roleIds);
 
     /**
      * 添加角色权限

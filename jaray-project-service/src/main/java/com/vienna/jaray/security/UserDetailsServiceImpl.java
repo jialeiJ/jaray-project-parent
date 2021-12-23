@@ -1,12 +1,9 @@
 package com.vienna.jaray.security;
 
 import com.vienna.jaray.common.Separator;
-import com.vienna.jaray.entity.system.SysMenu;
-import com.vienna.jaray.entity.system.SysRolePerm;
-import com.vienna.jaray.entity.system.SysUser;
-import com.vienna.jaray.mapper.system.SysMenuMapper;
-import com.vienna.jaray.mapper.system.SysRolePermMapper;
-import com.vienna.jaray.mapper.system.SysUserMapper;
+import com.vienna.jaray.common.SysMenuConfig;
+import com.vienna.jaray.entity.system.*;
+import com.vienna.jaray.mapper.system.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +33,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Autowired
 	private SysUserMapper sysUserMapper;
 	@Autowired
-	private SysRolePermMapper sysRolePermMapper;
+	private SysUserRoleMapper sysUserRoleMapper;
+	@Autowired
+	private SysRoleMenuMapper sysRoleMenuMapper;
 	@Autowired
 	private SysMenuMapper sysMenuMapper;
 
@@ -66,19 +65,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			return new User(sysUser.getName(), sysUser.getPassword(), grantedAuthorities);
 		}else{
 			// 1、获取角色
-			List<SysRolePerm> sysRolePermList = sysRolePermMapper.findByRids(sysUser.getRoleId().split(Separator.COMMA_SEPARATOR_EN.getSeparator()));
+			List<SysUserRole> sysUserRoleList = sysUserRoleMapper.findByUserId(sysUser.getId());
+			List<Integer> roleIdList = sysUserRoleList.stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
+
+			List<SysRoleMenu> sysRoleMenuList = sysRoleMenuMapper.findByRids(roleIdList);
 
 			// 2、获取用户所有角色的权限id
-			String[] pids = {};
-			for (SysRolePerm sysRolePerm : sysRolePermList) {
-				pids = ArrayUtils.addAll(pids, sysRolePerm.getPermId().split(Separator.COMMA_SEPARATOR_EN.getSeparator()));
-			}
+			List<Integer> menuIdList = sysRoleMenuList.stream().map(SysRoleMenu::getMenuId).collect(Collectors.toList());
 
 			// 3、获取用户所有角色的所有权限菜单对象
-			List<SysMenu> sysMenuList = sysMenuMapper.findByIds(pids);
+			List<SysMenu> sysMenuList = sysMenuMapper.findByIds(menuIdList);
 
 			// 4、获取所有权限
-			Set<String> permissions = sysMenuList.stream().map(SysMenu::getPerm).collect(Collectors.toSet());
+			Set<String> permissions = sysMenuList.stream().filter(sysMenu -> sysMenu.getType() == SysMenuConfig.BTN_FLAG).map(SysMenu::getPerm).collect(Collectors.toSet());
 
 			//这里使用自定义权限列表的方式初始化权限
 			List<GrantedAuthority> grantedAuthorities = new ArrayList<> ();
